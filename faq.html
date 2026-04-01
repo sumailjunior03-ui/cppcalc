@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ | CPP Calc</title>
+  <meta name="description" content="Frequently asked questions about Canada Pension Plan (CPP) contributions — rates, exemptions, self-employment, Quebec, CPP2, and more." />
+  <link rel="canonical" href="https://cppcalc.ca/faq.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CPP Calc",
+    "url": "https://cppcalc.ca",
+    "description": "Free Canada Pension Plan (CPP) contribution estimator for employees and self-employed Canadians. Calculate your CPP deductions based on current CRA rates.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
+    "creator": { "@type": "Organization", "name": "CPP Calc", "url": "https://cppcalc.ca" }
+  }
+  </script>
+  <script type="application/ld+json" id="faq-schema-ld">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"What is the CPP contribution rate for 2026?","acceptedAnswer":{"@type":"Answer","text":"The employee CPP contribution rate for 2026 is 5.95% of pensionable earnings. The employer matches this at the same rate. Self-employed individuals pay both portions, for a combined rate of 11.90%."}},
+      {"@type":"Question","name":"What is the maximum CPP contribution for 2026?","acceptedAnswer":{"@type":"Answer","text":"The maximum employee or employer CPP1 contribution for 2026 is $4,230.45. Including CPP2, the maximum employee total is $4,646.45. Self-employed individuals have a maximum CPP1 total of $8,460.90, or $9,292.90 including CPP2."}},
+      {"@type":"Question","name":"What is the basic exemption for CPP?","acceptedAnswer":{"@type":"Answer","text":"The CPP basic exemption is $3,500. This amount is subtracted from your employment income before the contribution rate is applied. It has remained at $3,500 for many years."}},
+      {"@type":"Question","name":"Do I have to pay CPP if I live in Quebec?","acceptedAnswer":{"@type":"Answer","text":"No. Quebec residents contribute to the Quebec Pension Plan (QPP) instead of CPP. The QPP is a separate program administered by Retraite Quebec and has its own rates and thresholds."}}
+    ]
+  }
+  </script>
+  <style>
+    :root{--red:#c8102e;--red-dark:#9e0b23;--red-light:#f5e8eb;--navy:#1a2744;--navy-mid:#253660;--mist:#eef1f6;--mist-dark:#dde2ec;--white:#ffffff;--off-white:#f8f9fb;--text:#1c2333;--text-mid:#3d4a60;--text-light:#6b7897;--border:#d0d8e8;--radius:10px;--radius-lg:16px;--shadow-sm:0 1px 4px rgba(26,39,68,0.08);--shadow-md:0 4px 16px rgba(26,39,68,0.12);--font-head:'Georgia','Times New Roman',serif;--font-body:'Segoe UI',system-ui,-apple-system,sans-serif;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:var(--font-body);font-size:16px;line-height:1.65;color:var(--text);background:var(--off-white);}
+    .site-header{background:var(--navy);border-bottom:3px solid var(--red);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-md);}
+    .header-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;}
+    .site-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .logo-maple{font-size:22px;}
+    .logo-text{font-family:var(--font-head);font-size:1.2rem;color:var(--white);font-weight:700;}
+    .logo-text span{color:var(--red);}
+    .site-nav{display:flex;gap:6px;}
+    .site-nav a{color:rgba(255,255,255,0.78);text-decoration:none;font-size:0.85rem;padding:6px 12px;border-radius:6px;transition:all 0.2s;}
+    .site-nav a:hover{background:rgba(255,255,255,0.1);color:#fff;}
+    .page-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);padding:48px 24px;text-align:center;}
+    .page-hero h1{font-family:var(--font-head);color:var(--white);font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:10px;}
+    .page-hero p{color:rgba(255,255,255,0.7);max-width:580px;margin:0 auto;}
+    .page-content{max-width:800px;margin:40px auto;padding:0 24px 60px;}
+    .faq-category{margin-bottom:36px;}
+    .faq-category-title{font-family:var(--font-head);font-size:1.2rem;color:var(--navy);margin-bottom:16px;padding:12px 18px;background:var(--mist);border-left:4px solid var(--red);border-radius:0 var(--radius) var(--radius) 0;}
+    .faq-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;}
+    .faq-q{width:100%;background:none;border:none;text-align:left;padding:16px 20px;font-size:0.95rem;font-weight:600;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-body);gap:12px;}
+    .faq-q:hover{background:var(--mist);}
+    .faq-arrow{font-size:0.75rem;transition:transform 0.25s;color:var(--red);flex-shrink:0;}
+    .faq-item.open .faq-arrow{transform:rotate(180deg);}
+    .faq-a{display:none;padding:4px 20px 18px;font-size:0.9rem;color:var(--text-mid);line-height:1.7;}
+    .faq-a p{margin-bottom:10px;}
+    .faq-a p:last-child{margin-bottom:0;}
+    .faq-item.open .faq-a{display:block;}
+    .cta-box{background:var(--navy);border-radius:var(--radius-lg);padding:28px 32px;text-align:center;margin-top:40px;}
+    .cta-box h3{font-family:var(--font-head);color:var(--white);margin-bottom:12px;font-size:1.2rem;}
+    .cta-box p{color:rgba(255,255,255,0.72);font-size:0.95rem;margin-bottom:18px;}
+    .cta-btn{display:inline-block;background:var(--red);color:var(--white);text-decoration:none;padding:13px 28px;border-radius:var(--radius);font-weight:700;font-size:0.95rem;transition:background 0.2s;}
+    .cta-btn:hover{background:var(--red-dark);}
+    .rates-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);margin:12px 0;font-size:0.88rem;}
+    .rates-table thead{background:var(--navy);color:var(--white);}
+    .rates-table th{padding:10px 14px;text-align:left;font-size:0.8rem;font-weight:600;}
+    .rates-table td{padding:9px 14px;border-bottom:1px solid var(--border);color:var(--text-mid);}
+    .rates-table tbody tr:last-child td{border-bottom:none;}
+    .rates-table td strong{color:var(--text);}
+    .site-footer{background:var(--navy);border-top:3px solid var(--red);color:rgba(255,255,255,0.7);margin-top:60px;}
+    #network-footer{max-width:1100px;margin:0 auto;padding:0 24px;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding:48px 0 36px;}
+    .footer-col h4{color:var(--white);font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;}
+    .footer-col p{font-size:0.85rem;line-height:1.6;margin-bottom:10px;}
+    .footer-col a{display:block;color:rgba(255,255,255,0.65);text-decoration:none;font-size:0.85rem;padding:3px 0;transition:color 0.2s;}
+    .footer-col a:hover{color:var(--white);}
+    .footer-email a{display:inline;color:#ffb3be;}
+    .footer-hub-desc{display:block;font-size:0.8rem;color:rgba(255,255,255,0.45);margin-top:4px;}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding:18px 0;font-size:0.8rem;color:rgba(255,255,255,0.4);text-align:center;}
+    .footer-bottom p{margin:3px 0;}
+    .related-card{display:flex;flex-direction:column;gap:6px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;transition:border-color 0.2s;box-shadow:var(--shadow-sm);}
+    .related-card:hover{border-color:var(--red);}
+    .related-card-name{font-weight:700;color:var(--navy);}
+    .related-card-desc{font-size:0.85rem;color:var(--text-mid);}
+    .related-card-link{font-size:0.82rem;font-weight:600;color:var(--red);}
+    #network-related-calculators{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:8px;}
+    @media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}.site-nav{display:none;}}
+    @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7744853829365165" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <span class="logo-maple">🍁</span>
+      <span class="logo-text">CPP<span>Calc</span>.ca</span>
+    </a>
+    <nav class="site-nav">
+      <a href="faq.html">FAQ</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <h1>FAQ</h1>
+  <p>Clear, accurate answers to the most common questions about Canada Pension Plan contributions for employees and the self-employed.</p>
+</section>
+
+<div class="page-content">
+
+  <!-- Category 1: Basics -->
+  <div class="faq-category">
+    <div class="faq-category-title">CPP Basics</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What is the Canada Pension Plan? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p>The Canada Pension Plan (CPP) is a mandatory contributory social insurance program administered by the Government of Canada. It provides replacement income to contributors and their families at retirement, and also provides disability and survivor benefits.</p>
+        <p>CPP is funded by contributions from employees, employers, and self-employed individuals throughout their working years. In return, contributors receive a monthly pension at retirement, as well as access to disability and survivor protections during their contributing years.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Who must contribute to CPP? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p>Most working Canadians between the ages of 18 and 70 with employment income exceeding $3,500 per year are required to contribute to CPP. This applies to both T4 employees and self-employed individuals. Exceptions include:</p>
+        <p>Quebec residents, who contribute to the Quebec Pension Plan (QPP) instead. Individuals already receiving a CPP disability pension. Those aged 65–70 who are receiving CPP or QPP retirement benefits and have elected to stop contributing using the CPT30 form. Anyone over the age of 70 — contributions end automatically.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What are the CPP contribution rates and thresholds for <span class="faq-tax-year"></span>? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <table class="rates-table" id="faq-rates-table">
+          <thead><tr><th>Parameter</th><th id="faq-rates-year-col">Value</th></tr></thead>
+          <tbody id="faq-rates-tbody">
+            <tr><td>Year's Maximum Pensionable Earnings (YMPE)</td><td id="faq-ympe-val"><strong>—</strong></td></tr>
+            <tr><td>Basic Exemption Amount</td><td id="faq-exempt-val"><strong>—</strong></td></tr>
+            <tr><td>Employee Contribution Rate</td><td id="faq-emp-rate-val"><strong>—</strong></td></tr>
+            <tr><td>Employer Contribution Rate</td><td id="faq-er-rate-val"><strong>—</strong></td></tr>
+            <tr><td>Self-Employed Rate</td><td id="faq-se-rate-val"><strong>—</strong></td></tr>
+            <tr><td>Max Employee/Employer Contribution</td><td id="faq-max-emp-val"><strong>—</strong></td></tr>
+            <tr><td>Max Self-Employed Contribution</td><td id="faq-max-se-val"><strong>—</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What is the basic exemption and why does it exist? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p id="faq-exemption-p1">The basic exemption is $3,500 — a fixed annual amount that is subtracted from your employment income before the CPP contribution rate is applied. The first $3,500 you earn is not subject to CPP deductions.</p>
+        <p>The basic exemption exists as a form of relief for very low-income earners, ensuring that those earning minimal income are not burdened with CPP contributions. The $3,500 amount has not changed in many years and is set in the CPP legislation.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What is the YMPE? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p id="faq-ympe-p1">YMPE stands for Year's Maximum Pensionable Earnings. It is the annual ceiling on income that is subject to CPP contributions. For 2026, the YMPE is $74,600. Income earned above this amount is not subject to base CPP contributions.</p>
+        <p>The YMPE is adjusted annually by the federal government based on changes in the average wage in Canada. Each October, the government announces the following year's YMPE. Because the YMPE increases over time, the maximum CPP contribution also increases each year.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 2: Employee vs Self-Employed -->
+  <div class="faq-category">
+    <div class="faq-category-title">Employees vs. Self-Employed</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Why do self-employed people pay double the CPP? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p>Under the CPP legislation, both the employee and the employer are required to contribute equal amounts to CPP. When you are self-employed, you are legally treated as both the employee and the employer — so you must pay both portions.</p>
+        <p id="faq-se-combined-p">The result is a combined rate of 11.90% (5.95% employee + 5.95% employer). However, there is a partial offset: the employer portion of CPP paid by a self-employed individual is deductible as a business expense on Line 22200 of the T1 tax return. This reduces your taxable income by that amount, providing a meaningful tax benefit that partially compensates for the higher upfront cost.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How do self-employed individuals pay their CPP? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p>Unlike T4 employees whose CPP is deducted from each paycheque by the employer, self-employed individuals calculate and remit their CPP contributions annually when filing their T1 tax return. The CRA calculates your self-employment CPP based on the net self-employment income you report on Schedule 8 of your return.</p>
+        <p>If the resulting CPP amount is significant, you may also be required to make quarterly tax installments, which would include your CPP obligation. A tax professional or the CRA's installment reminder letters can help you stay on top of these payments.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">I work as both an employee and freelancer. How does CPP work? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p>If you have both T4 employment income and self-employment income, your CPP situation is more complex. Your employer will deduct CPP on your T4 employment income throughout the year. You will separately calculate and pay CPP on your net self-employment income when filing your tax return.</p>
+        <p>Crucially, both income streams are subject to the same overall annual CPP maximum. If your combined income causes you to exceed the contribution maximum, you may be entitled to a refund or credit of any overpayment. Schedule 8 on your T1 handles this calculation. A tax professional is recommended for dual-income situations.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 3: CPP and Quebec -->
+  <div class="faq-category">
+    <div class="faq-category-title">CPP and Quebec</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">I live in Quebec. Does this calculator apply to me? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p>No. Quebec has its own separate pension plan — the Quebec Pension Plan (QPP), administered by Retraite Québec. CPPCalc.ca is designed for residents of all Canadian provinces and territories outside Quebec.</p>
+        <p>The QPP has different contribution rates and thresholds than the CPP. Quebec residents should consult Retraite Québec's website (retraitequebec.gouv.qc.ca) for QPP-specific information and tools.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">I moved from Quebec to Ontario this year. What happens to my CPP/QPP? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p>Your CPP or QPP contributions are generally determined by your province of employment, not your province of residence. If you were employed in Quebec earlier in the year and outside Quebec later in the year, you may have contributions to both QPP and CPP. Your T4 slips will reflect which plan each employer contributed to on your behalf.</p>
+        <p>The good news is that QPP and CPP are co-ordinated — contributions to both count toward your total pension entitlement. For the specific tax treatment of a cross-provincial move, consult the CRA or a tax professional.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 4: CPP2 -->
+  <div class="faq-category">
+    <div class="faq-category-title">CPP Enhancement (CPP2)</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What is CPP2 and does this calculator include it? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p id="faq-cpp2-p1">CPP2 is the second additional Canada Pension Plan contribution introduced as part of ongoing CPP enhancement. CPP2 applies to employment income between the YMPE and the Year's Additional Maximum Pensionable Earnings (YAMPE). The CPP2 employee rate is 4%. This is separate from and in addition to base CPP contributions.</p>
+        <p id="faq-cpp2-p2">This calculator fully calculates both CPP1 and CPP2 contributions. Includes both base CPP (CPP1) and enhanced CPP (CPP2) contributions. If your income exceeds $74,600, CPP2 contributions on income between $74,600 and $85,000 are included in your results. The maximum combined employee total (CPP1 + CPP2) is $4,646.45.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 5: Retirement and Benefits -->
+  <div class="faq-category">
+    <div class="faq-category-title">Retirement and Benefits</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How much CPP pension will I receive at retirement? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p id="faq-pension-amount-p">Your CPP retirement pension is based on how much and for how long you contributed to CPP throughout your working years. The maximum CPP pension (for someone who contributed the maximum for 39 or more years at age 65) is updated annually by the government. The CRA's My Account portal and Service Canada's Canadian Retirement Income Calculator are the best tools for estimating your personal CPP retirement benefit based on your actual contribution history.</p>
+        <p>Most Canadians receive less than the maximum because they didn't always earn above the YMPE or had gaps in employment. The CRA's My Account portal and Service Canada's "Canadian Retirement Income Calculator" are the best tools for estimating your personal CPP retirement benefit based on your actual contribution history.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">When can I start receiving CPP? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p>You can begin receiving your CPP retirement pension as early as age 60 or as late as age 70. The standard start age is 65. Taking CPP before 65 results in a permanent reduction of 0.6% per month (7.2% per year) for each month before your 65th birthday. Taking it after 65 increases your pension by 0.7% per month (8.4% per year) up to age 70.</p>
+        <p>The optimal start age depends on your health, other income sources, and financial needs. Many financial advisors suggest that waiting until 70 is beneficial for those in good health with other income to rely on in the interim.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Do CPP contributions count toward my RRSP room? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p>CPP contributions do not directly create RRSP contribution room. RRSP room is calculated as 18% of your prior year's earned income, up to the annual RRSP limit. However, CPP contributions are recognized in the pension adjustment system — if you have a defined benefit pension, it reduces your RRSP room. CPP itself results in a pension adjustment, though typically a modest one.</p>
+        <p>For detailed RRSP room calculations, your Notice of Assessment from the CRA shows your available RRSP deduction limit for the current year.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 6: Tool-Specific -->
+  <div class="faq-category">
+    <div class="faq-category-title">About This Calculator</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Is CPPCalc.ca an official Government of Canada tool? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p>No. CPPCalc.ca is an independent estimation tool maintained by a Canadian web publisher. It is not affiliated with or endorsed by the Government of Canada, the Canada Revenue Agency (CRA), or Service Canada. For official CPP information and benefit calculations, visit canada.ca.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Is my income data stored or shared? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p>No. All calculations are performed entirely within your browser using JavaScript. No income information you enter is ever transmitted to any server. CPPCalc.ca does not collect, store, or have access to any data you enter into the calculator.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How often are the rates updated? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">
+        <p id="faq-update-p">CPP rates and thresholds are announced annually by the Government of Canada, typically in the fall for the following year. We review and update this calculator's parameters when new rates are announced. The current calculator reflects <span class="faq-tax-year"></span> CPP rates (last updated <span class="faq-last-updated"></span>). Always verify current rates at canada.ca before making important financial decisions.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h3>Ready to Calculate Your CPP?</h3>
+    <p>Use our free estimator to see your employee, employer, and self-employed CPP contributions in seconds.</p>
+    <a href="index.html" class="cta-btn">Open the CPP Calculator →</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div id="network-footer"></div>
+</footer>
+<script src="js/network.js"></script>
+<script>
+  // ── CPP_CONFIG — single source of truth (keep in sync with index.html) ──
+  const CPP_CONFIG = {
+    TAX_YEAR:    2026,
+    LAST_UPDATED: "March 22, 2026",
+    YMPE:        74600,
+    YAMPE:       85000,
+    BASIC_EXEMPTION: 3500,
+    EMPLOYEE_RATE:   0.0595,
+    EMPLOYER_RATE:   0.0595,
+    CPP2_EMPLOYEE_RATE: 0.04,
+    CPP2_EMPLOYER_RATE: 0.04,
+    get SELF_EMPLOYED_RATE() { return this.EMPLOYEE_RATE + this.EMPLOYER_RATE; },
+    get CPP2_SELF_EMPLOYED_RATE() { return this.CPP2_EMPLOYEE_RATE + this.CPP2_EMPLOYER_RATE; },
+    MAX_EMPLOYEE_CONTRIBUTION:      4230.45,
+    MAX_EMPLOYER_CONTRIBUTION:      4230.45,
+    MAX_SELF_EMPLOYED_CONTRIBUTION: 8460.90,
+    MAX_EMPLOYEE_CPP2:              416.00,
+    MAX_EMPLOYER_CPP2:              416.00,
+    MAX_SELF_EMPLOYED_CPP2:         832.00,
+    MAX_EMPLOYEE_TOTAL:             4646.45,
+    MAX_EMPLOYER_TOTAL:             4646.45,
+    MAX_SELF_EMPLOYED_TOTAL:        9292.90,
+  };
+
+  function f(n) { return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function pct(r) { return (r * 100).toFixed(2) + '%'; }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const C = CPP_CONFIG;
+
+    // ── Inject tax year into all .faq-tax-year spans ──
+    document.querySelectorAll('.faq-tax-year').forEach(el => { el.textContent = C.TAX_YEAR; });
+    document.querySelectorAll('.faq-last-updated').forEach(el => { el.textContent = C.LAST_UPDATED; });
+
+    // ── Rates table ──
+    const col = document.getElementById('faq-rates-year-col');
+    if (col) col.textContent = C.TAX_YEAR + ' Value';
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = '<strong>' + val + '</strong>'; };
+    set('faq-ympe-val',    f(C.YMPE));
+    set('faq-exempt-val',  f(C.BASIC_EXEMPTION));
+    set('faq-emp-rate-val', pct(C.EMPLOYEE_RATE));
+    set('faq-er-rate-val',  pct(C.EMPLOYER_RATE));
+    set('faq-se-rate-val',  pct(C.SELF_EMPLOYED_RATE));
+    set('faq-max-emp-val',  f(C.MAX_EMPLOYEE_TOTAL));
+    set('faq-max-se-val',   f(C.MAX_SELF_EMPLOYED_TOTAL));
+
+    // ── Config-dependent paragraph text ──
+    const setText = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+
+    setText('faq-exemption-p1',
+      `The basic exemption is ${f(C.BASIC_EXEMPTION)} — a fixed annual amount subtracted from your employment income before the CPP contribution rate is applied. The first ${f(C.BASIC_EXEMPTION)} you earn is not subject to CPP deductions.`);
+
+    setText('faq-ympe-p1',
+      `YMPE stands for Year's Maximum Pensionable Earnings. It is the annual ceiling on income subject to CPP contributions. For ${C.TAX_YEAR}, the YMPE is ${f(C.YMPE)}. Income earned above this amount is not subject to base CPP contributions. The YMPE is adjusted annually by the federal government based on the average industrial wage in Canada.`);
+
+    setText('faq-se-combined-p',
+      `The result is a combined rate of ${pct(C.SELF_EMPLOYED_RATE)} (${pct(C.EMPLOYEE_RATE)} employee + ${pct(C.EMPLOYER_RATE)} employer). However, there is a partial offset: the employer portion of CPP paid by a self-employed individual is deductible as a business expense on Line 22200 of the T1 tax return. This reduces your taxable income by that amount, providing a meaningful tax benefit that partially compensates for the higher upfront cost.`);
+
+    setText('faq-cpp2-p1',
+      `CPP2 is the second additional Canada Pension Plan contribution. CPP2 applies to employment income between the YMPE and the Year's Additional Maximum Pensionable Earnings (YAMPE). In ${C.TAX_YEAR}, the YMPE is ${f(C.YMPE)} and the YAMPE is ${f(C.YAMPE)}. The CPP2 employee and employer rate is each ${pct(C.CPP2_EMPLOYEE_RATE)}, applied on earnings in that band. Maximum CPP2 per side is ${f(C.MAX_EMPLOYEE_CPP2)}.`);
+
+    setText('faq-cpp2-p2',
+      `This calculator fully calculates both CPP1 and CPP2 contributions. If your income exceeds ${f(C.YMPE)}, CPP2 contributions on income between ${f(C.YMPE)} and ${f(C.YAMPE)} are included in your results. The maximum combined employee total (CPP1 + CPP2) is ${f(C.MAX_EMPLOYEE_TOTAL)}.`);
+
+    setText('faq-update-p',
+      `CPP rates and thresholds are announced annually by the Government of Canada, typically in the fall for the following year. We review and update this calculator's parameters when new rates are announced. The current calculator reflects ${C.TAX_YEAR} CPP rates (last updated ${C.LAST_UPDATED}). Always verify current rates at canada.ca before making important financial decisions.`);
+
+    // ── Update FAQPage schema with live values ──
+    const schemaEl = document.getElementById('faq-schema-ld');
+    if (schemaEl) {
+      const schema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question",
+            "name": `What is the CPP contribution rate for ${C.TAX_YEAR}?`,
+            "acceptedAnswer": { "@type": "Answer", "text": `The employee CPP contribution rate for ${C.TAX_YEAR} is ${pct(C.EMPLOYEE_RATE)} of pensionable earnings. The employer matches this at the same rate. Self-employed individuals pay both portions, for a combined rate of ${pct(C.SELF_EMPLOYED_RATE)}.` }},
+          { "@type": "Question",
+            "name": `What is the maximum CPP contribution for ${C.TAX_YEAR}?`,
+            "acceptedAnswer": { "@type": "Answer", "text": `The maximum employee or employer CPP1 contribution for ${C.TAX_YEAR} is ${f(C.MAX_EMPLOYEE_CONTRIBUTION)}. Self-employed individuals have a maximum of ${f(C.MAX_SELF_EMPLOYED_CONTRIBUTION)}.` }},
+          { "@type": "Question",
+            "name": "What is the basic exemption for CPP?",
+            "acceptedAnswer": { "@type": "Answer", "text": `The CPP basic exemption is ${f(C.BASIC_EXEMPTION)}. This amount is subtracted from your employment income before the contribution rate is applied.` }},
+          { "@type": "Question",
+            "name": "Do I have to pay CPP if I live in Quebec?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Quebec residents contribute to the Quebec Pension Plan (QPP) instead of CPP. The QPP is administered by Retraite Quebec and has its own rates and thresholds." }}
+        ]
+      };
+      schemaEl.textContent = JSON.stringify(schema, null, 2);
+    }
+  });
+
+  function toggleFaq(btn) {
+    btn.parentElement.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

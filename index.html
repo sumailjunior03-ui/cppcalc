@@ -3,738 +3,254 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CPP Calc | cppcalc.ca</title>
-  <meta name="description" content="Estimate your Canada Pension Plan (CPP) contributions for 2026. Enter your employment income to calculate employee, employer, and self-employed CPP amounts instantly." />
-  <link rel="canonical" href="https://cppcalc.ca/index.html" />
+  <title>CPP Contribution Calculator (Canada) | cppcalc.ca</title>
+  <meta name="description" content="Canada Pension Plan contribution reference for employees and the self-employed. Covers pensionable earnings, CPP1 and CPP2 tiers, and annual thresholds based on current CRA rates." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23c8102e'/><text x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' font-weight='bold' fill='white'>C</text></svg>" />
+  <link rel="canonical" href="https://cppcalc.ca/" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "CPP Calc",
+    "name": "CPP Contribution Calculator (Canada)",
     "url": "https://cppcalc.ca",
-    "description": "Free Canada Pension Plan (CPP) contribution estimator for employees and self-employed Canadians. Calculate your CPP deductions based on current CRA rates.",
+    "description": "Canada Pension Plan contribution calculator for employees and self-employed Canadians. Calculates CPP1 and CPP2 based on current CRA rates.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "CAD"
-    },
-    "creator": {
-      "@type": "Organization",
-      "name": "CPP Calc",
-      "url": "https://cppcalc.ca"
-    }
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
+    "creator": { "@type": "Organization", "name": "CPPCalc.ca", "url": "https://cppcalc.ca" }
   }
   </script>
 
   <style>
-    /* ── Design Direction: Clean Canadian Government-Adjacent Authority ── */
-    /* Inspired by clarity, trust, and institutional credibility           */
-
     :root {
-      --red:       #c8102e;
-      --red-dark:  #9e0b23;
-      --red-light: #f5e8eb;
-      --navy:      #1a2744;
-      --navy-mid:  #253660;
-      --slate:     #3d4f6e;
-      --mist:      #eef1f6;
-      --mist-dark: #dde2ec;
-      --white:     #ffffff;
-      --off-white: #f8f9fb;
-      --text:      #1c2333;
-      --text-mid:  #3d4a60;
-      --text-light:#6b7897;
-      --border:    #d0d8e8;
-      --success:   #1a7f4b;
-      --radius:    10px;
-      --radius-lg: 16px;
-      --shadow-sm: 0 1px 4px rgba(26,39,68,0.08);
-      --shadow-md: 0 4px 16px rgba(26,39,68,0.12);
-      --shadow-lg: 0 8px 32px rgba(26,39,68,0.16);
-      --font-head: 'Georgia', 'Times New Roman', serif;
-      --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --red:#c8102e; --red-dark:#9e0b23; --red-light:#f5e8eb;
+      --navy:#1a2744; --navy-mid:#253660; --slate:#3d4f6e;
+      --mist:#eef1f6; --mist-dark:#dde2ec;
+      --white:#ffffff; --off-white:#f8f9fb;
+      --text:#1c2333; --text-mid:#3d4a60; --text-light:#6b7897;
+      --border:#d0d8e8;
+      --radius:10px; --radius-lg:16px;
+      --shadow-sm:0 1px 4px rgba(26,39,68,0.08);
+      --shadow-md:0 4px 16px rgba(26,39,68,0.12);
+      --shadow-lg:0 8px 32px rgba(26,39,68,0.16);
+      --font-head:'Georgia','Times New Roman',serif;
+      --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
     }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font-body);font-size:16px;line-height:1.65;color:var(--text);background:var(--off-white);}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.65;
-      color: var(--text);
-      background: var(--off-white);
-    }
-
-    /* ── Site Header ── */
-    .site-header {
-      background: var(--navy);
-      border-bottom: 3px solid var(--red);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: var(--shadow-md);
-    }
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 60px;
-    }
-    .site-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-    .logo-maple {
-      font-size: 22px;
-      line-height: 1;
-    }
-    .logo-text {
-      font-family: var(--font-head);
-      font-size: 1.2rem;
-      color: var(--white);
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-    .logo-text span { color: var(--red); }
-    .site-nav { display: flex; gap: 6px; }
-    .site-nav a {
-      color: rgba(255,255,255,0.78);
-      text-decoration: none;
-      font-size: 0.85rem;
-      padding: 6px 12px;
-      border-radius: 6px;
-      transition: all 0.2s;
-    }
-    .site-nav a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    /* ── Header ── */
+    .site-header{background:var(--navy);border-bottom:3px solid var(--red);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-md);}
+    .header-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;}
+    .site-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .logo-maple{font-size:22px;line-height:1;}
+    .logo-text{font-family:var(--font-head);font-size:1.2rem;color:var(--white);font-weight:700;letter-spacing:-0.01em;}
+    .logo-text span{color:var(--red);}
+    .site-nav{display:flex;gap:6px;}
+    .site-nav a{color:rgba(255,255,255,0.78);text-decoration:none;font-size:0.85rem;padding:6px 12px;border-radius:6px;transition:all 0.2s;}
+    .site-nav a:hover{background:rgba(255,255,255,0.1);color:#fff;}
 
     /* ── Hero ── */
-    .hero {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, var(--slate) 100%);
-      padding: 56px 24px 48px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-    .hero-inner { position: relative; max-width: 700px; margin: 0 auto; }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(200,16,46,0.2);
-      border: 1px solid rgba(200,16,46,0.4);
-      color: #ffb3be;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 4px 14px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-    }
-    .hero h1 {
-      font-family: var(--font-head);
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      color: var(--white);
-      line-height: 1.25;
-      margin-bottom: 14px;
-      font-weight: 700;
-    }
-    .hero p {
-      color: rgba(255,255,255,0.72);
-      font-size: 1.05rem;
-      max-width: 560px;
-      margin: 0 auto;
-    }
+    .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--slate) 100%);padding:52px 24px 44px;text-align:center;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+    .hero-inner{position:relative;max-width:700px;margin:0 auto;}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(200,16,46,0.2);border:1px solid rgba(200,16,46,0.4);color:#ffb3be;font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:18px;}
+    .hero h1{font-family:var(--font-head);font-size:clamp(1.8rem,4vw,2.6rem);color:var(--white);line-height:1.25;margin-bottom:12px;font-weight:700;}
+    .hero-intro{color:rgba(255,255,255,0.72);font-size:1.02rem;max-width:580px;margin:0 auto 18px;}
+    .hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
+    .hero-meta span{color:rgba(255,255,255,0.55);font-size:0.82rem;}
+    .hero-meta strong{color:rgba(255,255,255,0.85);}
 
-    /* ── Main Layout ── */
-    .main-content {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 60px;
-    }
+    /* ── Layout ── */
+    .main-content{max-width:1100px;margin:0 auto;padding:0 24px 60px;}
 
     /* ── Calculator Card ── */
-    .calc-card {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg);
-      margin: -28px auto 40px;
-      max-width: 860px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      position: relative;
-      z-index: 10;
-    }
-    .calc-header {
-      background: linear-gradient(90deg, var(--red) 0%, var(--red-dark) 100%);
-      padding: 18px 28px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .calc-header h2 {
-      font-family: var(--font-head);
-      color: var(--white);
-      font-size: 1.15rem;
-      font-weight: 700;
-    }
-    .calc-header .calc-icon { font-size: 1.3rem; }
-    .calc-body { padding: 32px 36px; }
+    .calc-card{background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);margin:-24px auto 40px;max-width:860px;overflow:hidden;border:1px solid var(--border);position:relative;z-index:10;}
+    .calc-header{background:linear-gradient(90deg,var(--red) 0%,var(--red-dark) 100%);padding:16px 28px;display:flex;align-items:center;gap:10px;}
+    .calc-header h2{font-family:var(--font-head);color:var(--white);font-size:1.15rem;font-weight:700;}
+    .calc-icon{font-size:1.3rem;}
+    .trust-strip{display:flex;align-items:center;gap:20px;padding:9px 18px;background:var(--mist);border-bottom:1px solid var(--mist-dark);font-size:0.8rem;color:var(--text-light);flex-wrap:wrap;}
+    .ts-item{display:flex;align-items:center;gap:5px;}
+    .ts-item strong{color:var(--navy);font-weight:600;}
+    .ts-sep{color:var(--border);}
+    .calc-body{padding:28px 32px;}
 
-    /* Inputs */
-    .input-group { margin-bottom: 24px; }
-    .input-group label {
-      display: block;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--navy);
-      margin-bottom: 8px;
-      letter-spacing: 0.01em;
-    }
-    .input-group label .label-sub {
-      font-weight: 400;
-      color: var(--text-light);
-      font-size: 0.82rem;
-    }
-    .input-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-    .input-prefix {
-      position: absolute;
-      left: 14px;
-      font-size: 0.95rem;
-      color: var(--text-light);
-      font-weight: 600;
-      pointer-events: none;
-    }
-    .input-wrap input[type="number"] {
-      width: 100%;
-      padding: 13px 14px 13px 30px;
-      border: 2px solid var(--border);
-      border-radius: var(--radius);
-      font-size: 1.05rem;
-      font-family: var(--font-body);
-      color: var(--text);
-      background: var(--off-white);
-      transition: border-color 0.2s, box-shadow 0.2s;
-      -moz-appearance: textfield;
-    }
-    .input-wrap input[type="number"]::-webkit-inner-spin-button,
-    .input-wrap input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
-    .input-wrap input[type="number"]:focus {
-      outline: none;
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(200,16,46,0.1);
-      background: var(--white);
-    }
+    .input-group{margin-bottom:22px;}
+    .input-group label{display:block;font-size:0.88rem;font-weight:600;color:var(--navy);margin-bottom:8px;letter-spacing:0.01em;}
+    .label-sub{font-weight:400;color:var(--text-light);font-size:0.82rem;}
+    .input-wrap{position:relative;display:flex;align-items:center;}
+    .input-prefix{position:absolute;left:14px;font-size:0.95rem;color:var(--text-light);font-weight:600;pointer-events:none;}
+    .input-wrap input[type="number"]{width:100%;padding:13px 14px 13px 30px;border:2px solid var(--border);border-radius:var(--radius);font-size:1.05rem;font-family:var(--font-body);color:var(--text);background:var(--off-white);transition:border-color 0.2s,box-shadow 0.2s;-moz-appearance:textfield;}
+    .input-wrap input[type="number"]::-webkit-inner-spin-button,.input-wrap input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;}
+    .input-wrap input[type="number"]:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(200,16,46,0.1);background:var(--white);}
 
-    /* Toggle */
-    .toggle-group {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 18px;
-      background: var(--mist);
-      border-radius: var(--radius);
-      border: 2px solid var(--mist-dark);
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-    .toggle-group:hover { border-color: var(--red); }
-    .toggle-switch {
-      position: relative;
-      width: 48px;
-      height: 26px;
-      flex-shrink: 0;
-    }
-    .toggle-switch input { display: none; }
-    .toggle-track {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background: var(--mist-dark);
-      border-radius: 13px;
-      transition: background 0.25s;
-      cursor: pointer;
-    }
-    .toggle-track::after {
-      content: '';
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 20px;
-      height: 20px;
-      background: var(--white);
-      border-radius: 50%;
-      transition: transform 0.25s;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-    }
-    .toggle-switch input:checked + .toggle-track { background: var(--red); }
-    .toggle-switch input:checked + .toggle-track::after { transform: translateX(22px); }
-    .toggle-label-text { font-size: 0.92rem; color: var(--text); }
-    .toggle-label-text strong { display: block; color: var(--navy); font-size: 0.88rem; font-weight: 600; }
+    .toggle-group{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--mist);border-radius:var(--radius);border:2px solid var(--mist-dark);cursor:pointer;transition:border-color 0.2s;}
+    .toggle-group:hover{border-color:var(--red);}
+    .toggle-switch{position:relative;width:48px;height:26px;flex-shrink:0;}
+    .toggle-switch input{display:none;}
+    .toggle-track{display:block;width:100%;height:100%;background:var(--mist-dark);border-radius:13px;transition:background 0.25s;cursor:pointer;}
+    .toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:var(--white);border-radius:50%;transition:transform 0.25s;box-shadow:0 1px 4px rgba(0,0,0,0.2);}
+    .toggle-switch input:checked+.toggle-track{background:var(--red);}
+    .toggle-switch input:checked+.toggle-track::after{transform:translateX(22px);}
+    .toggle-label-text{font-size:0.92rem;color:var(--text);}
+    .toggle-label-text strong{display:block;color:var(--navy);font-size:0.88rem;font-weight:600;}
 
-    /* Calculate Button */
-    .btn-calculate {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius);
-      font-size: 1.05rem;
-      font-weight: 700;
-      font-family: var(--font-body);
-      cursor: pointer;
-      letter-spacing: 0.02em;
-      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
-      box-shadow: 0 4px 12px rgba(200,16,46,0.3);
-      margin-top: 8px;
-    }
-    .btn-calculate:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(200,16,46,0.4); }
-    .btn-calculate:active { transform: translateY(0); }
+    .btn-calculate{width:100%;padding:16px;background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);color:var(--white);border:none;border-radius:var(--radius);font-size:1.05rem;font-weight:700;font-family:var(--font-body);cursor:pointer;letter-spacing:0.02em;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 4px 12px rgba(200,16,46,0.3);margin-top:8px;}
+    .btn-calculate:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(200,16,46,0.4);}
+    .btn-calculate:active{transform:translateY(0);}
 
-    /* Results */
-    .results-section { display: none; margin-top: 28px; }
-    .results-section.visible { display: block; }
+    /* ── Results ── */
+    .results-section{display:none;margin-top:28px;}
+    .results-section.visible{display:block;}
+    .results-divider{height:1px;background:var(--border);margin-bottom:22px;}
+    .results-label{font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:16px;}
+    .results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px;margin-bottom:18px;}
+    .result-item{background:var(--mist);border-radius:var(--radius);padding:16px 18px;border-left:4px solid var(--navy);}
+    .result-item.highlight{background:var(--red-light);border-left-color:var(--red);}
+    .r-label{font-size:0.78rem;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;}
+    .r-value{font-size:1.45rem;font-weight:700;color:var(--navy);font-family:var(--font-head);line-height:1;}
+    .result-item.highlight .r-value{color:var(--red-dark);}
 
-    .results-divider {
-      height: 1px;
-      background: var(--border);
-      margin-bottom: 24px;
-    }
-    .results-label {
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-light);
-      margin-bottom: 16px;
-    }
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-    .result-item {
-      background: var(--mist);
-      border-radius: var(--radius);
-      padding: 16px 18px;
-      border-left: 4px solid var(--navy);
-    }
-    .result-item.highlight { background: var(--red-light); border-left-color: var(--red); }
-    .result-item .r-label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 6px;
-    }
-    .result-item .r-value {
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: var(--navy);
-      font-family: var(--font-head);
-      line-height: 1;
-    }
-    .result-item.highlight .r-value { color: var(--red-dark); }
+    .results-breakdown{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:16px;}
+    .results-breakdown h4{font-size:0.88rem;font-weight:700;color:var(--navy);margin-bottom:12px;}
+    .breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:0.9rem;}
+    .breakdown-row:last-child{border-bottom:none;}
+    .br-label{color:var(--text-mid);}
+    .br-val{font-weight:700;color:var(--text);font-family:monospace;font-size:0.95rem;}
 
-    .results-breakdown {
-      background: var(--off-white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      margin-bottom: 20px;
-    }
-    .results-breakdown h4 {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 12px;
-    }
-    .breakdown-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-    }
-    .breakdown-row:last-child { border-bottom: none; }
-    .breakdown-row .br-label { color: var(--text-mid); }
-    .breakdown-row .br-val { font-weight: 700; color: var(--text); font-family: monospace; font-size: 0.95rem; }
+    /* Contextual result message */
+    .result-context{border-radius:var(--radius);padding:13px 16px;font-size:0.88rem;line-height:1.55;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start;}
+    .result-context.under-cap{background:#e8f5e9;border:1px solid #a5d6a7;color:#2e6b33;}
+    .result-context.at-cap{background:#fff3e0;border:1px solid #ffcc80;color:#7a4800;}
+    .result-context.self-emp{background:#e3f2fd;border:1px solid #90caf9;color:#1a3b5d;}
+    .result-context.cpp2{background:#f3e5f5;border:1px solid #ce93d8;color:#4a1460;}
+    .rc-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
 
-    .results-note {
-      background: #fff8e6;
-      border: 1px solid #f5d87a;
-      border-radius: var(--radius);
-      padding: 12px 16px;
-      font-size: 0.83rem;
-      color: #7a5c00;
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
+    .results-note{background:#fff8e6;border:1px solid #f5d87a;border-radius:var(--radius);padding:11px 16px;font-size:0.83rem;color:#7a5c00;line-height:1.5;margin-bottom:16px;}
 
-    /* Trust Strip */
-    .trust-strip {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 9px 18px;
-      background: var(--mist);
-      border-bottom: 1px solid var(--mist-dark);
-      font-size: 0.8rem;
-      color: var(--text-light);
-      flex-wrap: wrap;
-    }
-    .trust-strip .ts-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .trust-strip .ts-item strong { color: var(--navy); font-weight: 600; }
-    .trust-strip .ts-sep { color: var(--border); }
 
-    /* PDF Button */
-    .btn-pdf {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 13px;
-      background: var(--white);
-      border: 2px solid var(--navy);
-      color: var(--navy);
-      border-radius: var(--radius);
-      font-size: 0.92rem;
-      font-weight: 600;
-      font-family: var(--font-body);
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .btn-pdf:hover { background: var(--navy); color: var(--white); }
-    .pdf-message {
-      display: none;
-      margin-top: 10px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--slate);
-      padding: 10px;
-      background: var(--mist);
-      border-radius: 6px;
-      border: 1px solid var(--mist-dark);
-    }
-    .pdf-message.visible { display: block; }
+    .next-step{margin-top:16px;padding:14px 18px;background:var(--mist);border-radius:var(--radius);border:1px solid var(--mist-dark);}
+    .next-step p{font-size:0.78rem;font-weight:700;color:var(--navy);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;}
+    .next-step a{display:block;font-size:0.9rem;color:var(--red);text-decoration:none;font-weight:600;padding:3px 0;}
+    .next-step a:hover{text-decoration:underline;}
 
     /* ── Content Sections ── */
-    .section {
-      max-width: 860px;
-      margin: 0 auto 48px;
-    }
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      padding-bottom: 14px;
-      border-bottom: 2px solid var(--mist-dark);
-    }
-    .section-number {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--navy);
-      color: var(--white);
-      font-size: 0.82rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .section h2 {
-      font-family: var(--font-head);
-      font-size: 1.4rem;
-      color: var(--navy);
-      line-height: 1.3;
-    }
-    .section h3 {
-      font-family: var(--font-head);
-      font-size: 1.1rem;
-      color: var(--navy);
-      margin: 20px 0 10px;
-    }
-    .section p { color: var(--text-mid); margin-bottom: 14px; font-size: 0.97rem; }
-    .section ul, .section ol {
-      color: var(--text-mid);
-      margin-bottom: 14px;
-      padding-left: 24px;
-    }
-    .section li { margin-bottom: 6px; font-size: 0.97rem; }
+    .section{max-width:860px;margin:0 auto 48px;}
+    .section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--mist-dark);}
+    .section-number{width:32px;height:32px;border-radius:50%;background:var(--navy);color:var(--white);font-size:0.82rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .section h2{font-family:var(--font-head);font-size:1.4rem;color:var(--navy);line-height:1.3;}
+    .section h3{font-family:var(--font-head);font-size:1.1rem;color:var(--navy);margin:22px 0 10px;}
+    .section p{color:var(--text-mid);margin-bottom:14px;font-size:0.97rem;}
+    .section ul,.section ol{color:var(--text-mid);margin-bottom:14px;padding-left:24px;}
+    .section li{margin-bottom:7px;font-size:0.97rem;}
 
-    /* Info Cards */
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin: 20px 0;
-    }
-    .info-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow-sm);
-    }
-    .info-card .ic-icon { font-size: 1.5rem; margin-bottom: 10px; }
-    .info-card .ic-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 6px;
-    }
-    .info-card .ic-desc { font-size: 0.85rem; color: var(--text-mid); line-height: 1.5; }
+    /* ── Info Grid ── */
+    .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:20px 0;}
+    .info-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);}
+    .ic-icon{font-size:1.5rem;margin-bottom:10px;}
+    .ic-title{font-size:0.88rem;font-weight:700;color:var(--navy);margin-bottom:6px;}
+    .ic-desc{font-size:0.85rem;color:var(--text-mid);line-height:1.5;}
 
-    /* Example Box */
-    .example-box {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
-      border-radius: var(--radius-lg);
-      padding: 28px 32px;
-      color: rgba(255,255,255,0.9);
-      margin: 20px 0;
-    }
-    .example-box h3 { color: var(--white); font-family: var(--font-head); margin-bottom: 16px; }
-    .example-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-      font-size: 0.92rem;
-    }
-    .example-row:last-child { border-bottom: none; }
-    .example-row .ex-label { color: rgba(255,255,255,0.72); }
-    .example-row .ex-val { font-weight: 700; color: var(--white); font-family: monospace; }
-    .example-row.total .ex-label { color: rgba(255,255,255,0.9); font-weight: 600; }
-    .example-row.total .ex-val { color: #ffb3be; font-size: 1.05rem; }
+    /* ── Example Box ── */
+    .example-box{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:var(--radius-lg);padding:26px 30px;color:rgba(255,255,255,0.9);margin:16px 0;}
+    .example-box h3{color:var(--white);font-family:var(--font-head);margin-bottom:14px;}
+    .example-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.12);font-size:0.91rem;}
+    .example-row:last-child{border-bottom:none;}
+    .ex-label{color:rgba(255,255,255,0.72);}
+    .ex-val{font-weight:700;color:var(--white);font-family:monospace;}
+    .example-row.total .ex-label{color:rgba(255,255,255,0.9);font-weight:600;}
+    .example-row.total .ex-val{color:#ffb3be;font-size:1.05rem;}
 
-    /* Formula Box */
-    .formula-box {
-      background: var(--white);
-      border: 2px solid var(--navy);
-      border-radius: var(--radius);
-      padding: 22px 24px;
-      margin: 20px 0;
-      font-family: 'Georgia', serif;
-    }
-    .formula-line {
-      padding: 6px 0;
-      border-bottom: 1px dashed var(--mist-dark);
-      font-size: 0.93rem;
-      color: var(--text);
-    }
-    .formula-line:last-child { border-bottom: none; }
-    .formula-line .f-label { color: var(--text-light); font-size: 0.82rem; margin-right: 8px; }
-    .formula-line code {
-      background: var(--mist);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.9rem;
-      color: var(--navy);
-    }
+    /* ── Formula Box ── */
+    .formula-box{background:var(--white);border:2px solid var(--navy);border-radius:var(--radius);padding:22px 24px;margin:20px 0;font-family:'Georgia',serif;}
+    .formula-line{padding:6px 0;border-bottom:1px dashed var(--mist-dark);font-size:0.92rem;color:var(--text);}
+    .formula-line:last-child{border-bottom:none;}
+    .f-label{color:var(--text-light);font-size:0.82rem;margin-right:8px;}
+    .formula-line code{background:var(--mist);padding:2px 8px;border-radius:4px;font-size:0.88rem;color:var(--navy);}
 
-    /* Scenario Table */
-    .scenarios-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--white);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      margin: 20px 0;
-      font-size: 0.9rem;
-    }
-    .scenarios-table thead { background: var(--navy); color: var(--white); }
-    .scenarios-table th { padding: 12px 16px; text-align: left; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; }
-    .scenarios-table td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: var(--text-mid); }
-    .scenarios-table tbody tr:last-child td { border-bottom: none; }
-    .scenarios-table tbody tr:hover { background: var(--mist); }
-    .scenarios-table td strong { color: var(--text); }
+    /* ── Scenario Cards ── */
+    .scenario-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin:20px 0;}
+    .scenario-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);}
+    .scenario-head{padding:14px 20px;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;}
+    .scenario-head.employee{background:var(--navy);color:var(--white);}
+    .scenario-head.capped{background:var(--red-dark);color:var(--white);}
+    .scenario-head.self-emp{background:var(--slate);color:var(--white);}
+    .scenario-body{padding:18px 20px;}
+    .scenario-row{display:flex;justify-content:space-between;font-size:0.88rem;padding:5px 0;border-bottom:1px solid var(--mist-dark);}
+    .scenario-row:last-child{border-bottom:none;font-weight:700;color:var(--navy);}
+    .sc-label{color:var(--text-mid);}
+    .sc-val{font-family:monospace;font-weight:600;color:var(--text);}
+    .scenario-note{font-size:0.82rem;color:var(--text-light);padding:12px 20px;border-top:1px solid var(--border);background:var(--off-white);line-height:1.5;}
 
-    /* FAQ */
-    .faq-list { margin: 20px 0; }
-    .faq-item {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 10px;
-      overflow: hidden;
-    }
-    .faq-q {
-      width: 100%;
-      background: none;
-      border: none;
-      text-align: left;
-      padding: 16px 20px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--navy);
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--font-body);
-    }
-    .faq-q:hover { background: var(--mist); }
-    .faq-arrow {
-      font-size: 0.75rem;
-      transition: transform 0.25s;
-      color: var(--red);
-    }
-    .faq-item.open .faq-arrow { transform: rotate(180deg); }
-    .faq-a {
-      display: none;
-      padding: 4px 20px 18px;
-      font-size: 0.9rem;
-      color: var(--text-mid);
-      line-height: 1.6;
-    }
-    .faq-item.open .faq-a { display: block; }
+    /* ── Authority Grid ── */
+    .authority-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin:20px 0;}
+    .authority-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:22px;border-top:3px solid var(--red);box-shadow:var(--shadow-sm);}
+    .authority-card h3{font-family:var(--font-head);font-size:1rem;color:var(--navy);margin-bottom:10px;}
+    .authority-card p{font-size:0.88rem;color:var(--text-mid);line-height:1.6;margin:0;}
 
-    /* related-calculators */
-    #network-related-calculators {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-    .related-card {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      text-decoration: none;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
-      box-shadow: var(--shadow-sm);
-    }
-    .related-card:hover {
-      border-color: var(--red);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-    }
-    .related-card-name {
-      font-weight: 700;
-      color: var(--navy);
-      font-size: 0.95rem;
-    }
-    .related-card-desc {
-      font-size: 0.85rem;
-      color: var(--text-mid);
-      line-height: 1.5;
-    }
-    .related-card-link {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--red);
-      margin-top: 4px;
-    }
+    /* ── Scenarios Table ── */
+    .scenarios-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);margin:20px 0;font-size:0.89rem;}
+    .scenarios-table thead{background:var(--navy);color:var(--white);}
+    .scenarios-table th{padding:11px 14px;text-align:left;font-size:0.81rem;font-weight:600;letter-spacing:0.04em;}
+    .scenarios-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-mid);}
+    .scenarios-table tbody tr:last-child td{border-bottom:none;}
+    .scenarios-table tbody tr:hover{background:var(--mist);}
+    .scenarios-table td strong{color:var(--text);}
+
+    /* ── FAQ ── */
+    .faq-list{margin:20px 0;}
+    .faq-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;}
+    .faq-q{width:100%;background:none;border:none;text-align:left;padding:16px 20px;font-size:0.95rem;font-weight:600;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-body);gap:12px;}
+    .faq-q:hover{background:var(--mist);}
+    .faq-arrow{font-size:0.75rem;transition:transform 0.25s;color:var(--red);flex-shrink:0;}
+    .faq-item.open .faq-arrow{transform:rotate(180deg);}
+    .faq-a{display:none;padding:4px 20px 18px;font-size:0.9rem;color:var(--text-mid);line-height:1.65;}
+    .faq-item.open .faq-a{display:block;}
+
+    /* ── Related Calculators ── */
+    #network-related-calculators{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px;}
+    .related-card{display:flex;flex-direction:column;gap:6px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;transition:border-color 0.2s,box-shadow 0.2s,transform 0.15s;box-shadow:var(--shadow-sm);}
+    .related-card:hover{border-color:var(--red);box-shadow:var(--shadow-md);transform:translateY(-2px);}
+    .related-card-name{font-weight:700;color:var(--navy);font-size:0.95rem;}
+    .related-card-desc{font-size:0.85rem;color:var(--text-mid);line-height:1.5;}
+    .related-card-link{font-size:0.82rem;font-weight:600;color:var(--red);margin-top:4px;}
+
+    /* ── Misc ── */
+    .disclaimer-banner{max-width:860px;margin:0 auto 32px;background:var(--mist);border:1px solid var(--mist-dark);border-radius:var(--radius);padding:13px 18px;font-size:0.84rem;color:var(--text-light);display:flex;align-items:flex-start;gap:10px;}
+    .disc-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+    .limits-aside{max-width:860px;margin:0 auto 40px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;}
+    .limits-aside h3{font-family:var(--font-head);font-size:1rem;color:var(--navy);margin-bottom:8px;}
+    .limits-aside p{font-size:0.9rem;color:var(--text-mid);margin:0;}
 
     /* ── Footer ── */
-    .site-footer {
-      background: var(--navy);
-      border-top: 3px solid var(--red);
-      color: rgba(255,255,255,0.7);
-      margin-top: 60px;
-    }
-    #network-footer { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 40px;
-      padding: 48px 0 36px;
-    }
-    .footer-col h4 {
-      color: var(--white);
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 14px;
-    }
-    .footer-col p { font-size: 0.85rem; line-height: 1.6; margin-bottom: 10px; }
-    .footer-col a {
-      display: block;
-      color: rgba(255,255,255,0.65);
-      text-decoration: none;
-      font-size: 0.85rem;
-      padding: 3px 0;
-      transition: color 0.2s;
-    }
-    .footer-col a:hover { color: var(--white); }
-    .footer-email a { display: inline; color: #ffb3be; }
-    .footer-hub-desc { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.45); margin-top: 4px; }
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding: 18px 0;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.4);
-      text-align: center;
-    }
-    .footer-bottom p { margin: 3px 0; }
+    .site-footer{background:var(--navy);border-top:3px solid var(--red);color:rgba(255,255,255,0.7);margin-top:60px;}
+    #network-footer{max-width:1100px;margin:0 auto;padding:0 24px;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding:48px 0 36px;}
+    .footer-col h4{color:var(--white);font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;}
+    .footer-col p{font-size:0.85rem;line-height:1.6;margin-bottom:10px;}
+    .footer-col a{display:block;color:rgba(255,255,255,0.65);text-decoration:none;font-size:0.85rem;padding:3px 0;transition:color 0.2s;}
+    .footer-col a:hover{color:var(--white);}
+    .footer-email a{display:inline;color:#ffb3be;}
+    .footer-hub-desc{display:block;font-size:0.8rem;color:rgba(255,255,255,0.45);margin-top:4px;}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding:18px 0;font-size:0.8rem;color:rgba(255,255,255,0.4);text-align:center;}
+    .footer-bottom p{margin:3px 0;}
 
-    /* ── Utilities ── */
-    .disclaimer-banner {
-      max-width: 860px;
-      margin: 0 auto 32px;
-      background: var(--mist);
-      border: 1px solid var(--mist-dark);
-      border-radius: var(--radius);
-      padding: 14px 20px;
-      font-size: 0.84rem;
-      color: var(--text-light);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
+    @media(max-width:768px){
+      .calc-body{padding:20px 18px;}
+      .footer-grid{grid-template-columns:1fr 1fr;gap:28px;}
+      .site-nav{display:none;}
+      .results-grid{grid-template-columns:1fr 1fr;}
+      .scenarios-table{font-size:0.82rem;}
+      .scenarios-table th,.scenarios-table td{padding:8px 10px;}
     }
-    .disclaimer-banner .disc-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-
-    @media (max-width: 768px) {
-      .calc-body { padding: 20px 18px; }
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
-      .site-nav { display: none; }
-      .results-grid { grid-template-columns: 1fr 1fr; }
-      .scenarios-table { font-size: 0.82rem; }
-      .scenarios-table th, .scenarios-table td { padding: 9px 10px; }
-    }
-    @media (max-width: 480px) {
-      .hero { padding: 36px 16px 40px; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .results-grid { grid-template-columns: 1fr; }
+    @media(max-width:480px){
+      .hero{padding:36px 16px 40px;}
+      .footer-grid{grid-template-columns:1fr;}
+      .results-grid{grid-template-columns:1fr;}
+      .scenario-grid{grid-template-columns:1fr;}
     }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7744853829365165" crossorigin="anonymous"></script>
@@ -757,43 +273,45 @@
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">🍁 Canada Pension Plan</div>
-    <h1>CPP Calc</h1>
-    <p>Estimate your Canada Pension Plan contributions for <span id="hero-year">2026</span> — for employees and the self-employed. Instant, browser-only calculations.</p>
+    <div class="hero-badge">🍁 Canada Pension Plan · <span id="hero-year">2026</span></div>
+    <h1>CPP Contribution Calculator</h1>
+    <p class="hero-intro">Canada Pension Plan contributions are calculated on pensionable earnings after a basic exemption, at rates set annually by the Government of Canada. This tool applies current CRA rates for both CPP1 and CPP2 tiers.</p>
+    <div class="hero-meta">
+      <span>📅 Tax year: <strong id="hero-year-meta">2026</strong></span>
+      <span>·</span>
+      <span>Covers employee and self-employed contributions</span>
+      <span>·</span>
+      <span>Includes CPP2 enhancement tier</span>
+    </div>
   </div>
 </section>
 
 <div class="main-content">
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════
        SECTION 1 — CALCULATOR TOOL
-  ══════════════════════════════════════════════ -->
-  <div id="calculator" class="section" style="margin-top: 0;">
+  ═══════════════════════════════════════════ -->
+  <div id="calculator" class="section" style="margin-top:0;">
     <div class="calc-card">
       <div class="calc-header">
         <span class="calc-icon">🧮</span>
-        <h2 id="calc-header-title">Calculator Tool</h2>
+        <h2>CPP Contribution Calculator (Canada)</h2>
       </div>
       <div class="trust-strip">
-        <span class="ts-item">📅 <strong id="trust-tax-year">Loading rates…</strong></span>
+        <span class="ts-item">📅 <strong id="trust-tax-year">Loading…</strong></span>
         <span class="ts-sep">|</span>
         <span class="ts-item">🕐 <strong id="trust-last-updated">Loading…</strong></span>
         <span class="ts-sep">|</span>
-        <span class="ts-item">Estimates only — not official CRA output</span>
+        <span class="ts-item">Estimates only · not official CRA output</span>
       </div>
       <div class="calc-body">
-
         <div class="input-group">
-          <label for="income">
-            Annual Employment Income
-            <span class="label-sub"> — Gross employment income before deductions (CAD)</span>
-          </label>
+          <label for="income"><span id="incomeLabel">Annual Employment Income</span> <span class="label-sub">— Gross before deductions (CAD)</span></label>
           <div class="input-wrap">
             <span class="input-prefix">$</span>
             <input type="number" id="income" placeholder="e.g. 65000" min="0" max="9999999" step="100" />
           </div>
         </div>
-
         <div class="input-group">
           <label>Employment Type</label>
           <label class="toggle-group" for="selfEmployed">
@@ -807,681 +325,648 @@
             </span>
           </label>
         </div>
-
         <button class="btn-calculate" onclick="calculateCPP()">Calculate CPP Contributions</button>
 
-        <!-- Results -->
         <div class="results-section" id="resultsSection">
           <div class="results-divider"></div>
-          <div class="results-label">Your Estimated CPP Contributions</div>
+          <div class="results-label">Your Estimated CPP Contributions — <span id="results-year-label">2026</span></div>
+          <div class="results-grid" id="resultsGrid"></div>
+          <div class="result-context" id="resultContext" style="display:none;"></div>
+          <div class="results-breakdown" id="resultsBreakdown"></div>
+          <div class="results-note" id="resultsNote"></div>
 
-          <div class="results-grid" id="resultsGrid">
-            <!-- Populated by JS -->
+          <div class="next-step" id="nextStepBlock" style="display:none;">
+            <p>Continue to</p>
+            <div id="nextStepLinks"></div>
           </div>
-
-          <div class="results-breakdown" id="resultsBreakdown">
-            <!-- Populated by JS -->
-          </div>
-
-          <div class="results-note" id="resultsNote">
-            ⚠️ <strong>Estimate Only:</strong> This calculator uses 2026 CPP rates and thresholds. Results are for informational purposes and do not constitute official CRA calculations or financial advice. Actual deductions may vary based on your specific employment situation, province, and other income sources.
-          </div>
-
-          <button class="btn-pdf" id="pdfBtn" onclick="handlePdfClick()">
-            ⬇ Download PDF Summary
-          </button>
-          <div class="pdf-message" id="pdfMessage">PDF export coming soon</div>
         </div>
-
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════
        SECTION 2 — WHEN THIS CALCULATOR IS USEFUL
-  ══════════════════════════════════════════════ -->
+  ═══════════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
       <div class="section-number">2</div>
       <h2>When This Calculator Is Useful</h2>
     </div>
-    <p>The CPP Contribution Calculator is designed for Canadians who want to understand how much of their income goes toward the Canada Pension Plan — and what their employer also contributes on their behalf. It's relevant in several common situations:</p>
     <div class="info-grid">
       <div class="info-card">
-        <div class="ic-icon">💼</div>
-        <div class="ic-title">Starting a New Job</div>
-        <div class="ic-desc">Understand your take-home pay by seeing exactly how much CPP will be withheld from each paycheque based on your annual salary.</div>
-      </div>
-      <div class="info-card">
         <div class="ic-icon">🧾</div>
-        <div class="ic-title">Self-Employment Planning</div>
-        <div class="ic-desc" id="info-se-rate">Self-employed Canadians pay both employee and employer CPP portions — totalling 11.90% of pensionable earnings. This calculator shows the full self-employment cost.</div>
+        <div class="ic-title">Verifying a Paycheque Deduction</div>
+        <div class="ic-desc">Your paystub shows a CPP deduction but you want to confirm the number is reasonable. Enter your gross annual salary and compare. Payroll rounding can produce small differences, but large gaps warrant a question to HR.</div>
       </div>
       <div class="info-card">
-        <div class="ic-icon">📊</div>
-        <div class="ic-title">Annual Tax Budgeting</div>
-        <div class="ic-desc">When estimating your total income deductions for the year, knowing your CPP contributions helps complete the full picture alongside EI and income tax.</div>
+        <div class="ic-icon">📐</div>
+        <div class="ic-title">Planning Self-Employment Income</div>
+        <div class="ic-desc">When you stop receiving a T4, CPP becomes a line item you plan for rather than one that disappears from a paystub. The full self-employed rate changes cash flow projections. Run the number before you set your invoicing rates.</div>
       </div>
       <div class="info-card">
         <div class="ic-icon">🎯</div>
-        <div class="ic-title">Negotiating Compensation</div>
-        <div class="ic-desc">Employers must match your CPP contributions. Understanding the true cost of employment helps when negotiating salary or comparing compensation packages.</div>
+        <div class="ic-title">Checking Whether You've Hit the Annual Cap</div>
+        <div class="ic-desc">Higher earners hit the CPP maximum before year-end. Once capped, CPP stops being deducted. If you're trying to confirm when that happens — or why your net pay changed mid-year — enter your income and check the result against the annual maximum.</div>
       </div>
       <div class="info-card">
-        <div class="ic-icon">📅</div>
-        <div class="ic-title">Retirement Planning</div>
-        <div class="ic-desc">CPP contributions build your retirement entitlement. Knowing how much you contribute annually helps project your eventual CPP retirement benefit.</div>
+        <div class="ic-icon">⚖️</div>
+        <div class="ic-title">Comparing T4 vs. Contract Compensation</div>
+        <div class="ic-desc">A T4 position includes employer CPP matching — an amount that never appears on a paycheque but is part of total employment cost. When evaluating an equivalent contract rate, factoring in both sides of CPP is necessary for an accurate comparison.</div>
       </div>
       <div class="info-card">
-        <div class="ic-icon">🔍</div>
-        <div class="ic-title">Verifying Paystubs</div>
-        <div class="ic-desc">Cross-check your employer's CPP deductions against this estimate to confirm they match the expected rates and caps for the year.</div>
+        <div class="ic-icon">📊</div>
+        <div class="ic-title">Reconciling Your T4 Before Filing</div>
+        <div class="ic-desc">Before filing your return, compare the CPP amount in Box 16 of your T4 against this estimate. A significant gap — beyond a few dollars of payroll rounding — may indicate a mid-year employer change, over-contribution, or payroll error worth clarifying before you file.</div>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">🔄</div>
+        <div class="ic-title">Multiple Employers in One Year</div>
+        <div class="ic-desc">Each employer deducts CPP independently. If income splits across two T4 positions totalling more than the YMPE, you may over-contribute. The T1 refunds overpayments — but knowing in advance avoids the surprise.</div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════
        SECTION 3 — WHAT THIS CALCULATOR DOES
-  ══════════════════════════════════════════════ -->
+  ═══════════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
       <div class="section-number">3</div>
       <h2>What This Calculator Does</h2>
     </div>
-    <p id="what-it-does-intro">This tool estimates Canada Pension Plan (CPP) contributions based on your gross annual employment income and whether you are a traditional employee or self-employed. It applies the current CPP contribution rules established by the Canada Revenue Agency (CRA), including the basic personal exemption, the maximum pensionable earnings threshold, and the applicable contribution rates.</p>
-    <p>The calculator produces four primary outputs:</p>
+    <p>The CPP calculation involves three distinct inputs that determine the final contribution: gross employment income, a fixed basic exemption that reduces the base before the rate applies, and annual thresholds that cap how much income is subject to each tier.</p>
+
+    <h3>Pensionable Earnings</h3>
+    <p>Not all employment income is pensionable. The first <span id="wcd-exemption">$3,500</span> of annual earnings is exempt — this is the Basic Exemption Amount (BEA), fixed at that level and not indexed to inflation. Pensionable earnings for CPP1 are the amount above that exemption, capped at the Year's Maximum Pensionable Earnings (YMPE) of <span id="wcd-ympe">$74,600</span>. The contribution rate applies to this narrowed band, not to gross income.</p>
+
+    <h3>CPP1 and CPP2 Tiers</h3>
+    <p>Since 2024, CPP has operated in two tiers. The base CPP (CPP1) applies from the basic exemption up to the YMPE. The CPP2 enhancement applies on earnings between the YMPE and the Year's Additional Maximum Pensionable Earnings (YAMPE) of <span id="wcd-yampe">$85,000</span>. The two tiers have different contribution rates. This calculator applies both tiers automatically based on the income entered.</p>
+
+    <h3>Contribution Structure</h3>
+    <p>For T4 employees, CPP is split: the employee and employer each contribute at the same rate. The employee's share comes off the paycheque; the employer remits a matching amount separately. For self-employed individuals, both halves are paid by the same person — there is no employer to provide the match.</p>
+
+    <h3>What the Calculator Returns</h3>
     <ul>
-      <li><strong>Employee Portion:</strong> The CPP amount deducted from your paycheque by your employer and remitted to the CRA on your behalf.</li>
-      <li><strong>Employer Portion:</strong> The matching amount your employer contributes — an identical dollar amount to the employee portion. (If you are self-employed, you pay this yourself.)</li>
-      <li><strong>Total CPP Contribution:</strong> The combined amount flowing into your CPP account annually, from both employee and employer sides.</li>
-      <li><strong>Estimated Annual CPP Paid:</strong> The net cost to you personally — equal to the employee portion for T4 employees, or the full combined amount for the self-employed.</li>
+      <li><strong>Employee contribution</strong> — the amount deducted from gross pay for CPP1 and CPP2 combined.</li>
+      <li><strong>Employer contribution</strong> — the matching amount paid by the employer on top of compensation (not visible on a paystub).</li>
+      <li><strong>Total credited to your pension record</strong> — employee plus employer combined; the full CPP credited for the year.</li>
+      <li><strong>Self-employed total</strong> — both sides of CPP paid by the individual; this is the full cost of CPP with no employer offset.</li>
     </ul>
-    <p>All calculations are performed entirely in your browser. No data is transmitted to any server. This tool does not store, share, or process your income information in any way.</p>
-    <div class="disclaimer-banner">
-      <span class="disc-icon">ℹ️</span>
-      <span>This calculator uses publicly available CPP rate information. It is designed as an estimation tool. For official contribution amounts, consult your employer's payroll department or the Canada Revenue Agency (CRA) directly at canada.ca.</span>
-    </div>
+    <p style="font-size:0.9rem;color:var(--text-light);">All calculations run locally in your browser. Nothing entered here is transmitted or stored.</p>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════
        SECTION 4 — EXAMPLE CALCULATION
-  ══════════════════════════════════════════════ -->
+  ═══════════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
       <div class="section-number">4</div>
       <h2>Example Calculation</h2>
     </div>
-    <p id="example-calc-intro"><!-- Populated by JS --></p>
-    <div class="example-box" id="example-calc-box">
-      <!-- Populated by JS from CPP_CONFIG -->
-    </div>
-    <p id="example-calc-outro"><!-- Populated by JS --></p>
+    <p id="example-intro-1"></p>
+    <div class="example-box" id="example-box-1"></div>
+    <p id="example-outro-1" style="font-size:0.92rem;color:var(--text-light);margin-top:10px;"></p>
+
+    <h3 style="margin-top:32px;">Income Within the CPP2 Band</h3>
+    <p id="example-intro-2"></p>
+    <div class="example-box" id="example-box-2"></div>
+    <p id="example-outro-2" style="font-size:0.92rem;color:var(--text-light);margin-top:10px;"></p>
+
+    <h3 style="margin-top:32px;">Why Paystub Totals May Differ</h3>
+    <p>This calculator produces an annual estimate from gross income. Employers calculate CPP per pay period — weekly, bi-weekly, or semi-monthly — applying the rate to each period's earnings independently and rounding the result. Those small rounding differences accumulate over the year, so the T4 CPP box may vary from this estimate by a few dollars in either direction. That is expected behaviour.</p>
+    <p>Three other common sources of divergence: partial-year employment (the calculator assumes a full year), income split across two T4 employers (each deducts from zero), and a CPT30 election filed to stop contributions between ages 65 and 70.</p>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════
        SECTION 5 — FORMULA
-  ══════════════════════════════════════════════ -->
+  ═══════════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
       <div class="section-number">5</div>
       <h2>Formula</h2>
     </div>
-    <p>The Canada Pension Plan contribution formula is straightforward. The CRA defines pensionable earnings as gross employment income minus the basic exemption, capped at the Year's Maximum Pensionable Earnings (YMPE).</p>
-    <div class="formula-box" id="formula-box">
-      <!-- Populated by JS from CPP_CONFIG -->
-    </div>
-    <p id="formula-note"><!-- Populated by JS --></p>
+    <div class="formula-box" id="formula-box"></div>
+    <p id="formula-note" style="font-size:0.9rem;color:var(--text-light);margin-top:12px;"></p>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════
        SECTION 6 — CALCULATION METHODOLOGY
-  ══════════════════════════════════════════════ -->
+  ═══════════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
       <div class="section-number">6</div>
       <h2>Calculation Methodology</h2>
     </div>
-    <p id="methodology-intro"><!-- Populated by JS --></p>
-    <h3>Rates and Thresholds Used</h3>
-    <ul id="methodology-rates"><!-- Populated by JS --></ul>
-    <h3>Scope and Limitations</h3>
+
+    <h3>Step 1 — Determine Pensionable Earnings (CPP1)</h3>
+    <p>Take the gross annual employment income. If it exceeds the YMPE (<span id="meth-ympe">$74,600</span>), reduce it to the YMPE first. Then subtract the basic exemption of <span id="meth-exemp">$3,500</span>. The result is CPP1 pensionable earnings. If income is below the basic exemption, pensionable earnings are zero and no CPP is owed.</p>
+
+    <h3>Step 2 — Apply the CPP1 Rate</h3>
+    <p>Multiply CPP1 pensionable earnings by the employee rate of <span id="meth-rate1">5.95%</span>. The result is the employee CPP1 contribution. The employer contribution is calculated identically at the same rate. Neither amount can exceed the published annual maximum of <span id="meth-max1">$4,230.45</span> per side. For self-employed individuals, both rates are combined: <span id="meth-serate">11.90%</span> of CPP1 pensionable earnings, capped at <span id="meth-semax">$8,460.90</span>.</p>
+
+    <h3>Step 3 — Calculate the CPP2 Band (if applicable)</h3>
+    <p>If income exceeds the YMPE, a second calculation applies. Take the lower of gross income and the YAMPE (<span id="meth-yampe">$85,000</span>), then subtract the YMPE. The remainder is the CPP2 band — the earnings subject to the second tier. If income is below or equal to the YMPE, this step produces zero and CPP2 does not apply.</p>
+
+    <h3>Step 4 — Apply the CPP2 Rate</h3>
+    <p>Multiply the CPP2 band by the CPP2 employee rate of <span id="meth-rate2">4.00%</span>. The result is the CPP2 employee contribution, capped at <span id="meth-max2">$416.00</span> per side. Add CPP1 and CPP2 contributions to produce the total employee amount. The employer matches both tiers independently.</p>
+
+    <h3>Step 5 — Enforce Annual Caps</h3>
+    <p>Each tier has a hard ceiling. Contributions are capped at the published annual maximum for each tier regardless of income. A single-employer calculation will reach the cap for incomes at or above the YAMPE. Payroll systems enforce per-period caps to prevent over-deduction throughout the year.</p>
+
+    <h3>Rates and Thresholds (<span id="meth-year">2026</span>)</h3>
+    <ul id="methodology-rates-list"></ul>
+
+    <h3>Assumptions This Calculator Makes</h3>
     <ul>
-      <li>This calculator includes both base CPP (CPP1) and enhanced CPP (CPP2) contributions. CPP2 applies to income between the YMPE and the YAMPE at a rate of 4% per side.</li>
-      <li>The calculator assumes all income entered is eligible employment income as defined by the CRA. Non-employment income such as investment returns, rental income, or pension payments is not CPP-pensionable and should not be entered.</li>
-      <li>Provincial variations do not affect CPP calculations. CPP is a federal program. Residents of Quebec contribute to the Quebec Pension Plan (QPP) instead — this calculator does not apply to Quebec residents.</li>
-      <li>Partial-year employment situations are not modelled. The calculator assumes the income entered represents a full calendar year of earnings.</li>
+      <li>Income entered is eligible T4 or self-employment earnings. Investment returns, pension payments, and rental income are not CPP-pensionable.</li>
+      <li>Full calendar year of employment. Mid-year starts or stops will produce lower actual contributions than this estimate.</li>
+      <li>Outside Quebec. Residents of Quebec contribute to the QPP under separate provincial legislation — rates and thresholds differ.</li>
+      <li>No CPT30 election in effect. Contributions are assumed to continue for the full year regardless of age.</li>
     </ul>
-    <h3>Rounding</h3>
-    <p>All monetary outputs are rounded to the nearest cent. The CRA itself applies payroll rounding rules for per-pay-period calculations; annual estimates may differ very slightly from actual annual deductions due to per-period rounding effects.</p>
-    <h3>Quebec Note</h3>
-    <p>If you are a resident of Quebec, you contribute to the Quebec Pension Plan (QPP), not CPP. The QPP has different rates and thresholds. This calculator is designed for the nine provinces and three territories outside of Quebec.</p>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════
        SECTION 7 — EXAMPLE SCENARIOS
-  ══════════════════════════════════════════════ -->
+  ═══════════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
       <div class="section-number">7</div>
       <h2>Example Scenarios</h2>
     </div>
-    <p id="scenarios-intro"><!-- Populated by JS --></p>
-    <div id="scenarios-table-wrap"><!-- Populated by JS --></div>
-    <p id="scenarios-outro"><!-- Populated by JS --></p>
+    <p>The three scenarios below show how the calculation differs based on income level and employment type. Each uses <span id="scen-year">2026</span> rates.</p>
+
+    <div class="scenario-grid" id="scenario-cards"></div>
+
+    <h3 style="margin-top:32px;">Full Range — Contribution Reference Table</h3>
+    <div id="scenarios-table-wrap"></div>
+    <p id="scenarios-outro" style="font-size:0.9rem;color:var(--text-light);margin-top:10px;"></p>
   </div>
 
-  <!-- ══════════════════════════════════════════════
-       SECTION 8 — UNDERSTANDING YOUR RESULTS
-  ══════════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════
+       SECTION 8 — UNDERSTANDING CPP CONTRIBUTIONS
+  ═══════════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
       <div class="section-number">8</div>
-      <h2>Understanding</h2>
+      <h2>Understanding CPP Contributions</h2>
     </div>
-    <h3>Employee Portion</h3>
-    <p>This is the amount deducted directly from your gross pay and remitted by your employer to the CRA. You will see this line on every paycheque throughout the year until you reach the annual maximum. Once the maximum is reached, no further CPP deductions are taken for that calendar year.</p>
-    <h3>Employer Portion</h3>
-    <p>Your employer is legally required to match your CPP contributions dollar-for-dollar. This is an additional cost your employer bears — it does not come from your salary. While you may not see this on your paystub, it represents a significant part of the total investment in your CPP retirement benefit. Understanding this value is useful when evaluating the true total cost of employment or comparing contract versus employee positions.</p>
-    <h3>Total CPP Contribution</h3>
-    <p>This is the combined annual amount credited to your CPP record — the sum of both employee and employer portions. Over your working years, higher total contributions generally translate into a higher CPP retirement pension at age 65. The CPP retirement benefit is calculated based on your contribution history and the number of years you've contributed.</p>
-    <h3>Self-Employed Total</h3>
-    <p id="understanding-se"><!-- Populated by JS --></p>
-    <h3>Pensionable Earnings</h3>
-    <p id="understanding-pensionable"><!-- Populated by JS --></p>
-    <h3>What Happens When You Reach the Maximum</h3>
-    <p>Once you've made contributions totalling the maximum for the year (typically in the latter months of the year for higher earners), your employer stops deducting CPP from your paycheque. Some employees notice a modest increase in net pay at this point. If you are self-employed, you calculate and remit your contributions annually through your T1 tax return.</p>
+    <div class="authority-grid">
+      <div class="authority-card">
+        <h3>Why CPP Stops Increasing After the Cap</h3>
+        <p>CPP is designed to replace a defined portion of working income — not all of it. Because the resulting pension benefit is also capped at a maximum monthly amount, contributions are capped at the income level that produces that benefit. The YMPE and YAMPE are both indexed to national wage averages, so the ceilings rise each year — but the structure of a fixed band remains.</p>
+      </div>
+      <div class="authority-card">
+        <h3>Employee vs. Self-Employed: The Structural Difference</h3>
+        <p>A T4 employee's contribution appears as a paycheque deduction. The employer's matching contribution is a separate payroll cost, invisible to the employee. For self-employed individuals, there is no employer — so both halves are paid by the same person. The employer-equivalent portion is deductible on the T1 return (Line 22200), which partially offsets the higher total outlay.</p>
+      </div>
+      <div class="authority-card">
+        <h3>How CPP Contributions Build Retirement Benefit</h3>
+        <p>CPP is not a savings account. Contributions do not accumulate in an individual fund. Instead, they build entitlement to a monthly pension calculated from your average annual pensionable earnings over your working years. Years with earnings near or at the YMPE contribute fully to this average. Years with lower earnings or no employment reduce it. Gaps can be partially offset by your 8 lowest-earning years being excluded from the average.</p>
+      </div>
+      <div class="authority-card">
+        <h3>CPP2 — The Enhancement Tier</h3>
+        <p>The CPP2 enhancement was phased in starting in 2024. It applies a separate, lower rate to earnings in the band between the YMPE and YAMPE. Workers in this band are building entitlement to an additional layer of retirement benefit on top of base CPP. The CPP2 pension will be paid separately when retirement benefits begin.</p>
+      </div>
+      <div class="authority-card">
+        <h3>Contributions and Pension Timing</h3>
+        <p>CPP benefits can begin as early as age 60 (with a permanent reduction) or as late as age 70 (with a permanent increase). Each month you delay past 65 increases the monthly amount by 0.7%. Contributions continue as long as you work, unless you reach 70 or file a CPT30 election after 65 if already receiving a pension.</p>
+      </div>
+      <div class="authority-card">
+        <h3>Common Misunderstandings</h3>
+        <p>CPP does not apply to all income — only to earnings within defined pensionable bands. Reaching the annual maximum is not a penalty; it means the year's contribution is complete and deductions stop. Employer matching does not reduce the employee's salary. And CPP is not income tax — it is a mandatory pension contribution with a benefit tied directly to the amount contributed.</p>
+      </div>
+    </div>
+
+    <div class="limits-aside" style="margin-top:32px;">
+      <h3>How Annual Thresholds Are Set</h3>
+      <p>The YMPE, YAMPE, and basic exemption are federal parameters, set by the Government of Canada each October for the following calendar year. The YMPE and YAMPE are indexed to national average wage growth — they rise when wages rise. The basic exemption has remained at $3,500 for many years and is not indexed. Rates and thresholds apply uniformly across all provinces and territories except Quebec, which administers its own equivalent program, the QPP.</p>
+    </div>
   </div>
 
-
-  <!-- ══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════
        SECTION 9 — COMMON SCENARIOS
-  ══════════════════════════════════════════════ -->
+  ═══════════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
       <div class="section-number">9</div>
       <h2>Common Scenarios</h2>
     </div>
-    <h3>Full-Year Employee Under the YMPE</h3>
-    <p>If your annual employment income is below the Year's Maximum Pensionable Earnings ($74,600 in 2026), you will only make CPP1 contributions. Your annual contribution is calculated on your earnings minus the $3,500 basic exemption, multiplied by the 5.95% employee rate. For most part-time workers, students, and lower-income employees, this is the only CPP calculation that applies.</p>
-    <h3>Employee Earning Above the YMPE</h3>
-    <p>If your income exceeds $74,600, you will contribute to both CPP1 and CPP2. The CPP1 contribution applies to earnings between $3,500 and $74,600. The CPP2 contribution applies to earnings between $74,600 and $85,000 at the 4% rate. Once your income reaches or exceeds the YAMPE ($85,000), both contributions are capped at their annual maximums for the year.</p>
-    <h3>Self-Employed Individual</h3>
-    <p>A self-employed person earning $74,600 or more pays both the employee and employer portions of CPP1, for a combined rate of 11.90% on pensionable earnings. This results in a significantly higher annual CPP cost compared to an employee at the same income level. The employer-equivalent portion is deductible as a business expense on your T1 return, partially offsetting the additional cost.</p>
-    <h3>Mid-Year Start or Change in Employment</h3>
-    <p>If you begin employment partway through the year, your CPP contributions are still calculated based on your actual employment earnings for that period. Your employer deducts CPP each pay period. If you work for multiple employers in the same year, each employer calculates and deducts CPP independently — which can result in over-contributions. Over-contributed amounts are refunded through your annual T1 tax return.</p>
-    <h3>Reaching the Annual Maximum Mid-Year</h3>
-    <p>Higher earners typically reach their CPP contribution maximums before the end of the calendar year. Once the maximum is hit, your employer stops deducting CPP for the remainder of the year. This can result in a noticeable increase in your net pay in the later months of the year. The exact month this occurs depends on your pay frequency and gross earnings per period.</p>
+
+    <h3>Two T4 Employers in the Same Year</h3>
+    <p>Each employer calculates CPP independently. They have no visibility into each other's deductions. If total income across both positions exceeds the annual CPP ceiling, deductions may continue past the point where contributions should have stopped — producing an over-contribution. The T1 tax return corrects this automatically, returning the excess as part of the refund or reducing the balance owing.</p>
+
+    <h3>Income Splits Across CPP1 and CPP2 Bands</h3>
+    <p>Once income exceeds the YMPE, CPP1 is maxed and CPP2 begins on the incremental earnings above that point. The two tiers operate simultaneously from the employer's perspective — both deductions appear on the paystub for any pay period where year-to-date earnings are in the CPP2 band. The calculator separates CPP1 and CPP2 amounts in the results breakdown.</p>
+
+    <h3>Job Change Mid-Year</h3>
+    <p>The new employer starts CPP deductions from zero regardless of what the previous employer deducted. If combined income from both employers exceeds the ceiling, over-contributions result. The T1 reconciles this. For estimation purposes, enter your total expected annual income from all T4 sources — the calculator will compute the correct annual maximum regardless of how many employers paid you.</p>
+
+    <h3>High Earner — Reaching the Cap Before December</h3>
+    <p>Employees earning well above the YAMPE hit the annual CPP maximum before the calendar year ends. Once the cap is reached, the employer stops making CPP deductions for the rest of that year. The result is a slight increase in net pay — typically noticeable in the fall for those at substantially higher incomes. The exact timing depends on pay frequency and the income level.</p>
+
+    <h3>Working While Receiving a CPP Pension (Ages 65–70)</h3>
+    <p>If you are already receiving a CPP retirement pension and continue working, contributions continue by default. Filing a CPT30 form with your employer stops deductions from the following pay period. If contributions continue, each additional year of post-65 contributions generates a Post-Retirement Benefit (PRB), which is added to the existing monthly pension amount. At age 70, contributions stop automatically.</p>
   </div>
 
-  <!-- ══════════════════════════════════════════════
-       SECTION 10 — FAQ
-  ══════════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════
+       SECTION 10 — FAQ (SHORT, TOOL-SPECIFIC)
+  ═══════════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
       <div class="section-number">10</div>
       <h2>FAQ</h2>
     </div>
     <div class="faq-list">
+
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">What is the Canada Pension Plan (CPP)? <span class="faq-arrow">▼</span></button>
-        <div class="faq-a">The Canada Pension Plan is a mandatory social insurance program administered by the Government of Canada. It provides retirement, disability, and survivor benefits to working Canadians and their families. Contributions are made throughout your working years, and the retirement benefit is paid out beginning as early as age 60 (at a reduced rate) or as late as age 70 (at an enhanced rate). The standard start age is 65.</div>
+        <button class="faq-q" onclick="toggleFaq(this)">Is CPP capped at a specific income level? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a" id="faq-capped">CPP1 contributions stop once income reaches the YMPE (<span id="faq-ympe">$74,600</span> in <span id="faq-year-1">2026</span>). CPP2 applies on earnings above that up to the YAMPE (<span id="faq-yampe">$85,000</span>). Earnings above the YAMPE are not subject to any CPP contribution. This means there are two separate caps — one for each tier.</div>
       </div>
+
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Who is required to contribute to CPP? <span class="faq-arrow">▼</span></button>
-        <div class="faq-a" id="faq-who-contributes">Most working Canadians between the ages of 18 and 70 who earn more than $3,500 in employment income are required to contribute to CPP. Exceptions include: Quebec residents (who contribute to the QPP instead), individuals receiving a CPP disability or retirement pension who have opted out, and those who have reached 70 years of age.</div>
+        <button class="faq-q" onclick="toggleFaq(this)">Do self-employed individuals pay more CPP than employees? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a" id="faq-se-more">Yes. A T4 employee pays the employee rate and the employer matches it — but the employee never sees that match as a deduction. A self-employed person pays both halves directly. On the same pensionable earnings, a self-employed person's CPP cost is twice what a T4 employee deducts from their paycheque.</div>
       </div>
+
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">What is the YMPE and why does it matter? <span class="faq-arrow">▼</span></button>
-        <div class="faq-a" id="faq-ympe">The Year's Maximum Pensionable Earnings (YMPE) is the ceiling above which CPP contributions are not required under base CPP. In 2026, the YMPE is $74,600. Income earned above this threshold is not subject to base CPP contributions. The YMPE is adjusted annually by the federal government based on the average industrial wage in Canada.</div>
+        <button class="faq-q" onclick="toggleFaq(this)">What income is used in the calculation? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">CPP applies to employment income — wages and salaries from T4 employment, and net self-employment earnings. It does not apply to investment income, pension payments, rental income, or capital gains. The basic exemption of <span id="faq-exemp">$3,500</span> is subtracted before the rate applies, so the first portion of earnings is never subject to CPP.</div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">What is the basic exemption? <span class="faq-arrow">▼</span></button>
-        <div class="faq-a" id="faq-basic-exemption">The basic exemption is $3,500 per year — a fixed amount that is excluded from pensionable earnings before the contribution rate is applied. This exemption has remained at $3,500 for many years. Effectively, it means the first $3,500 of your income is not subject to CPP contributions.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Why do self-employed individuals pay more CPP? <span class="faq-arrow">▼</span></button>
-        <div class="faq-a" id="faq-se-rate">Self-employed Canadians are considered both the employee and the employer for CPP purposes. Under the CPP legislation, both sides must contribute — so a self-employed person pays the employee rate (5.95%) plus the employer rate (5.95%) for a combined rate of 11.90%. However, the employer portion paid by a self-employed individual is deductible as a business expense on the T1 tax return, reducing the effective cost.</div>
-      </div>
+
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">Does CPP apply in Quebec? <span class="faq-arrow">▼</span></button>
-        <div class="faq-a">No. Quebec has its own pension program — the Quebec Pension Plan (QPP) — which is administered by Retraite Québec rather than the CRA. QPP rates and thresholds differ from CPP. This calculator is designed for residents of all Canadian provinces and territories outside of Quebec.</div>
+        <div class="faq-a">No. Quebec residents contribute to the Quebec Pension Plan (QPP), a provincial program with its own rates, thresholds, and administration under Retraite Québec. QPP and CPP rates have tracked closely over time but are not identical. This calculator covers CPP only and does not apply to Quebec residents.</div>
       </div>
+
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">What is CPP2 and is it included in this calculator? <span class="faq-arrow">▼</span></button>
-        <div class="faq-a" id="faq-cpp2">CPP2 (the second additional CPP contribution) was introduced as part of CPP enhancement and applies to earnings between the YMPE and the Year's Additional Maximum Pensionable Earnings (YAMPE). In 2026, the YMPE is $74,600 and the YAMPE is $85,000. The CPP2 rate is 4% per side (employee and employer). This calculator fully calculates both CPP1 and CPP2 contributions. If your income exceeds $74,600, CPP2 will be included in your results on the band between $74,600 and $85,000.</div>
+        <button class="faq-q" onclick="toggleFaq(this)">How accurate is this estimate? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a" id="faq-accuracy">For a single T4 employer over a full calendar year, this estimate will closely match the annual deduction shown on your T4. Small differences arise from per-period payroll rounding by employers. The estimate will diverge for partial-year employment or multiple employers. This tool does not constitute official CRA output.</div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">How accurate is this calculator? <span class="faq-arrow">▼</span></button>
-        <div class="faq-a" id="faq-accuracy">This calculator applies the officially published CPP rates and thresholds for the active tax year. For most full-year employees with straightforward employment income, the result should closely match your actual annual CPP deductions. Minor differences may occur due to payroll rounding (per-period calculations can produce slight cumulative differences) or if you have more than one employer, mid-year employment changes, or other complex income situations. For official figures, consult the CRA or your payroll provider.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Can I opt out of CPP contributions? <span class="faq-arrow">▼</span></button>
-        <div class="faq-a">Generally, no. CPP contributions are mandatory for eligible employees and self-employed individuals. However, there are specific circumstances where you can elect to stop contributing: if you are between 65 and 70 and are already receiving a CPP or QPP retirement pension, you may file a CPT30 form with your employer to stop CPP deductions. Once you opt out, you also forgo the post-retirement benefit that continuing to contribute would provide.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Is this an official Government of Canada tool? <span class="faq-arrow">▼</span></button>
-        <div class="faq-a">No. CPPCalc.ca is an independent estimation tool and is not affiliated with the Government of Canada, the Canada Revenue Agency, or Service Canada. This tool is provided for informational and planning purposes only. For official CPP information, visit canada.ca or contact the CRA directly.</div>
-      </div>
+
     </div>
+    <p style="margin-top:14px;font-size:0.9rem;color:var(--text-light);">Edge cases, CPP2 mechanics, and contribution timing are addressed in the <a href="faq.html" style="color:var(--red);font-weight:600;">full FAQ</a>.</p>
   </div>
 
-  <!-- ══════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════
        SECTION 11 — RELATED CALCULATORS
-  ══════════════════════════════════════════════ -->
+  ═══════════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">
       <div class="section-number">11</div>
       <h2>Related Calculators</h2>
     </div>
-    <p>CPP contributions are just one piece of your overall payroll deductions. These related tools can help you build a complete picture of your Canadian take-home pay and employment deductions:</p>
-    <div id="network-related-calculators">
-      <!-- Populated by network.js -->
-    </div>
+    <p>CPP is one of three mandatory payroll deductions in Canada alongside Employment Insurance and income tax. These tools cover the others:</p>
+    <div id="network-related-calculators"></div>
   </div>
 
-</div><!-- /main-content -->
+  <div class="disclaimer-banner">
+    <span class="disc-icon">ℹ️</span>
+    <span>Results are estimates only, based on publicly available CRA rates. This tool does not constitute financial or tax advice. See the <a href="disclaimer.html" style="color:var(--red);font-weight:600;">disclaimer</a> for full terms.</span>
+  </div>
 
-<!-- Footer -->
+</div><!-- end .main-content -->
+
 <footer class="site-footer">
-  <div id="network-footer">
-    <!-- Populated by network.js -->
-  </div>
+  <div id="network-footer"></div>
 </footer>
 
+<script src="js/config.js"></script>
 <script src="js/network.js"></script>
 <script>
-  // ════════════════════════════════════════════════════════════════
-  // CPP_CONFIG — SINGLE SOURCE OF TRUTH FOR ALL ANNUAL RATE VALUES
-  //
-  // TO UPDATE FOR A NEW TAX YEAR:
-  //   1. Change TAX_YEAR to the new year
-  //   2. Update LAST_UPDATED to today's date
-  //   3. Update YMPE, YAMPE, BASIC_EXEMPTION, rates, and caps
-  //      to the values published by the CRA for that year
-  //   4. No other changes required — all logic reads from this object
-  // ════════════════════════════════════════════════════════════════
-  const CPP_CONFIG = {
-    // ── Meta ──────────────────────────────────────────────────────
-    TAX_YEAR:             2026,
-    LAST_UPDATED:         "March 22, 2026",
+document.addEventListener('DOMContentLoaded', function () {
+  const C = CPP_CONFIG;
+  const f  = n => '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const pct = r => (r * 100).toFixed(2) + '%';
 
-    // ── CPP1 (Base Plan) ──────────────────────────────────────────
-    YMPE:                 74600,      // Year's Maximum Pensionable Earnings (CPP1 ceiling)
-    BASIC_EXEMPTION:      3500,       // Fixed annual exemption (unchanged in legislation)
-    EMPLOYEE_RATE:        0.0595,     // 5.95% — employee contribution rate
-    EMPLOYER_RATE:        0.0595,     // 5.95% — employer must match employee dollar-for-dollar
-    // Self-employed pays both sides: EMPLOYEE_RATE + EMPLOYER_RATE
-    get SELF_EMPLOYED_RATE() { return this.EMPLOYEE_RATE + this.EMPLOYER_RATE; },
-
-    // Official 2026 CRA published maximums — CPP1
-    MAX_EMPLOYEE_CONTRIBUTION:    4230.45,   // (74600 − 3500) × 5.95%
-    MAX_EMPLOYER_CONTRIBUTION:    4230.45,
-    MAX_SELF_EMPLOYED_CONTRIBUTION: 8460.90,
-
-    // ── CPP2 (Second Additional — fully calculated) ──────────────
-    YAMPE:                85000,      // Year's Additional Maximum Pensionable Earnings (CPP2 ceiling)
-    CPP2_EMPLOYEE_RATE:   0.04,       // 4% on earnings between YMPE and YAMPE
-    CPP2_EMPLOYER_RATE:   0.04,
-    get CPP2_SELF_EMPLOYED_RATE() { return this.CPP2_EMPLOYEE_RATE + this.CPP2_EMPLOYER_RATE; },
-
-    // Official 2026 CRA published maximums — CPP2
-    MAX_EMPLOYEE_CPP2:    416.00,     // (85000 − 74600) × 4%
-    MAX_EMPLOYER_CPP2:    416.00,
-    MAX_SELF_EMPLOYED_CPP2: 832.00,
-
-    // ── Combined Totals ───────────────────────────────────────────
-    MAX_EMPLOYEE_TOTAL:   4646.45,    // CPP1 + CPP2 combined employee max
-    MAX_EMPLOYER_TOTAL:   4646.45,
-    MAX_SELF_EMPLOYED_TOTAL: 9292.90,
-  };
-  // ════════════════════════════════════════════════════════════════
-  // END CPP_CONFIG — do not scatter rate values below this line
-  // ════════════════════════════════════════════════════════════════
-
-
-  // ── Inject trust layer values from CPP_CONFIG on page load ──
-  document.addEventListener('DOMContentLoaded', function () {
-    const C = CPP_CONFIG;
-    const f = (n) => '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    const pct = (r) => (r * 100).toFixed(2) + '%';
-
-    // ── Trust strip ──
-    const trustYear = document.getElementById('trust-tax-year');
-    const trustDate = document.getElementById('trust-last-updated');
-    if (trustYear) trustYear.textContent = `Using ${C.TAX_YEAR} CPP rates`;
-    if (trustDate) trustDate.textContent = `Last updated: ${C.LAST_UPDATED}`;
-
-    // ── Calc header title — preserves "Calculator Tool" per section naming rules ──
-    // (no override — heading is set statically above)
-
-    // ── Hero year ──
-    const heroYear = document.getElementById('hero-year');
-    if (heroYear) heroYear.textContent = C.TAX_YEAR;
-
-    // ── Formula box ──
-    const formulaBox = document.getElementById('formula-box');
-    if (formulaBox) {
-      formulaBox.innerHTML = `
-        <div class="formula-line"><span class="f-label">Step 1 (CPP1):</span> <code>CPP1 Pensionable Earnings = min(Gross Income, YMPE) − Basic Exemption</code></div>
-        <div class="formula-line"><span class="f-label">Step 2 (CPP1 Employee):</span> <code>CPP1 Employee = CPP1 Pensionable Earnings × ${pct(C.EMPLOYEE_RATE)}</code></div>
-        <div class="formula-line"><span class="f-label">Step 2 (CPP1 Employer):</span> <code>CPP1 Employer = CPP1 Pensionable Earnings × ${pct(C.EMPLOYER_RATE)}</code></div>
-        <div class="formula-line"><span class="f-label">Step 2 (CPP1 Self-Employed):</span> <code>CPP1 Self-Employed = CPP1 Pensionable Earnings × ${pct(C.SELF_EMPLOYED_RATE)}</code></div>
-        <div class="formula-line"><span class="f-label">Step 3 (CPP2):</span> <code>CPP2 Band = max(0, min(Income, YAMPE) − YMPE)</code></div>
-        <div class="formula-line"><span class="f-label">Step 3 (CPP2 Employee):</span> <code>CPP2 Employee = CPP2 Band × ${pct(C.CPP2_EMPLOYEE_RATE)}</code></div>
-        <div class="formula-line"><span class="f-label">Step 4:</span> <code>Total = CPP1 + CPP2</code></div>
-        <div class="formula-line"><span class="f-label">${C.TAX_YEAR} YMPE (CPP1 ceiling):</span> <code>${f(C.YMPE)}</code></div>
-        <div class="formula-line"><span class="f-label">${C.TAX_YEAR} YAMPE (CPP2 ceiling):</span> <code>${f(C.YAMPE)}</code></div>
-        <div class="formula-line"><span class="f-label">${C.TAX_YEAR} Basic Exemption:</span> <code>${f(C.BASIC_EXEMPTION)}</code></div>
-        <div class="formula-line"><span class="f-label">Max CPP1 Employee / Employer:</span> <code>${f(C.MAX_EMPLOYEE_CONTRIBUTION)}</code></div>
-        <div class="formula-line"><span class="f-label">Max CPP2 Employee / Employer:</span> <code>${f(C.MAX_EMPLOYEE_CPP2)}</code></div>
-        <div class="formula-line"><span class="f-label">Max Employee Total (CPP1 + CPP2):</span> <code>${f(C.MAX_EMPLOYEE_TOTAL)}</code></div>
-        <div class="formula-line"><span class="f-label">Max Self-Employed Total:</span> <code>${f(C.MAX_SELF_EMPLOYED_TOTAL)}</code></div>
-      `;
-    }
-    const formulaNote = document.getElementById('formula-note');
-    if (formulaNote) {
-      formulaNote.textContent = `Note: CPP1 contributions are capped once income reaches the YMPE of ${f(C.YMPE)}. For income between ${f(C.YMPE)} and the YAMPE of ${f(C.YAMPE)}, CPP2 applies at ${pct(C.CPP2_EMPLOYEE_RATE)} per side. This calculator calculates both CPP1 and CPP2 contributions.`;
-    }
-
-    // ── Methodology section ──
-    const mIntro = document.getElementById('methodology-intro');
-    if (mIntro) mIntro.textContent = `This calculator applies the standard Canada Pension Plan contribution methodology as published by the Canada Revenue Agency for the ${C.TAX_YEAR} tax year. The following assumptions and simplifications apply:`;
-    const mRates = document.getElementById('methodology-rates');
-    if (mRates) {
-      mRates.innerHTML = `
-        <li><strong>Year's Maximum Pensionable Earnings (YMPE):</strong> ${f(C.YMPE)} — the annual ceiling above which CPP1 contributions do not apply under base CPP.</li>
-        <li><strong>Basic Exemption Amount:</strong> ${f(C.BASIC_EXEMPTION)} — a fixed annual exemption subtracted from pensionable earnings. This amount is set by CPP legislation.</li>
-        <li><strong>Employee Contribution Rate (CPP1):</strong> ${pct(C.EMPLOYEE_RATE)} — the rate applied to CPP1 pensionable earnings for T4 employees.</li>
-        <li><strong>Employer Contribution Rate (CPP1):</strong> ${pct(C.EMPLOYER_RATE)} — employers must match the employee contribution dollar-for-dollar.</li>
-        <li><strong>Self-Employed Rate (CPP1):</strong> ${pct(C.SELF_EMPLOYED_RATE)} — self-employed individuals pay both the employee and employer portions.</li>
-        <li><strong>Maximum Annual CPP1 Employee / Employer Contribution:</strong> ${f(C.MAX_EMPLOYEE_CONTRIBUTION)}</li>
-        <li><strong>Year's Additional Maximum Pensionable Earnings (YAMPE):</strong> ${f(C.YAMPE)} — the upper ceiling for CPP2.</li>
-        <li><strong>CPP2 Employee / Employer Rate:</strong> ${pct(C.CPP2_EMPLOYEE_RATE)} — applied to earnings between YMPE (${f(C.YMPE)}) and YAMPE (${f(C.YAMPE)}).</li>
-        <li><strong>Maximum Annual CPP2 Employee / Employer Contribution:</strong> ${f(C.MAX_EMPLOYEE_CPP2)}</li>
-        <li><strong>Maximum Annual Employee Total (CPP1 + CPP2):</strong> ${f(C.MAX_EMPLOYEE_TOTAL)}</li>
-        <li><strong>Maximum Annual Self-Employed Total (CPP1 + CPP2):</strong> ${f(C.MAX_SELF_EMPLOYED_TOTAL)}</li>
-      `;
-    }
-
-    // ── Example 1: $65,000 (CPP1 only) ──
-    const EXAMPLE_INCOME = 65000;
-    const exCpp1Capped      = Math.min(EXAMPLE_INCOME, C.YMPE);
-    const exCpp1Pens        = Math.max(0, exCpp1Capped - C.BASIC_EXEMPTION);
-    const exEmployee        = Math.min(parseFloat((exCpp1Pens * C.EMPLOYEE_RATE).toFixed(2)), C.MAX_EMPLOYEE_CONTRIBUTION);
-    const exEmployer        = Math.min(parseFloat((exCpp1Pens * C.EMPLOYER_RATE).toFixed(2)), C.MAX_EMPLOYER_CONTRIBUTION);
-    const exTotal           = parseFloat((exEmployee + exEmployer).toFixed(2));
-
-    const exIntro = document.getElementById('example-calc-intro');
-    if (exIntro) exIntro.textContent = `To illustrate how this calculator works, consider a T4 employee earning ${f(EXAMPLE_INCOME)} annually in ${C.TAX_YEAR}. At this income level, only CPP1 (base CPP) applies — CPP2 only applies on earnings above the YMPE of ${f(C.YMPE)}.`;
-
-    const exBox = document.getElementById('example-calc-box');
-    if (exBox) {
-      exBox.innerHTML = `
-        <h3>Worked Example: ${f(EXAMPLE_INCOME)} Annual Employment Income (T4 Employee — ${C.TAX_YEAR})</h3>
-        <div class="example-row"><span class="ex-label">Gross Annual Income</span><span class="ex-val">${f(EXAMPLE_INCOME)}</span></div>
-        <div class="example-row"><span class="ex-label">Less: Basic Exemption</span><span class="ex-val">− ${f(C.BASIC_EXEMPTION)}</span></div>
-        <div class="example-row"><span class="ex-label">CPP1 Pensionable Earnings</span><span class="ex-val">${f(exCpp1Pens)}</span></div>
-        <div class="example-row"><span class="ex-label">CPP1 Rate (employee)</span><span class="ex-val">${pct(C.EMPLOYEE_RATE)}</span></div>
-        <div class="example-row"><span class="ex-label">CPP1 Employee Contribution</span><span class="ex-val">${f(exEmployee)}</span></div>
-        <div class="example-row"><span class="ex-label">CPP1 Employer Contribution (matched)</span><span class="ex-val">${f(exEmployer)}</span></div>
-        <div class="example-row"><span class="ex-label">CPP2 — Not applicable (income below YMPE of ${f(C.YMPE)})</span><span class="ex-val">$0.00</span></div>
-        <div class="example-row total"><span class="ex-label">Total CPP Flowing to Your Account</span><span class="ex-val">${f(exTotal)}</span></div>
-      `;
-    }
-    const exOutro = document.getElementById('example-calc-outro');
-    if (exOutro) exOutro.textContent = `In this example, the employee pays ${f(exEmployee)} directly out of their paycheque, while the employer contributes an additional ${f(exEmployer)}. A total of ${f(exTotal)} is credited toward the employee's CPP retirement entitlement. Because income is below the YMPE of ${f(C.YMPE)}, CPP2 does not apply.`;
-
-    // ── Scenarios Table — includes CPP2 layer ──
-    const scenIntro = document.getElementById('scenarios-intro');
-    if (scenIntro) scenIntro.textContent = `The following table illustrates estimated CPP contributions at a range of income levels for both T4 employees and self-employed individuals in ${C.TAX_YEAR}. Incomes above ${f(C.YMPE)} trigger CPP2 on the band up to ${f(C.YAMPE)}.`;
-
-    const SCENARIO_INCOMES = [20000, 35000, 50000, 65000, C.YMPE, 80000, C.YAMPE];
-    const scenWrap = document.getElementById('scenarios-table-wrap');
-    if (scenWrap) {
-      const rows = SCENARIO_INCOMES.map(inc => {
-        // CPP1
-        const cpp1Capped  = Math.min(inc, C.YMPE);
-        const cpp1Pens    = Math.max(0, cpp1Capped - C.BASIC_EXEMPTION);
-        const emp1        = Math.min(parseFloat((cpp1Pens * C.EMPLOYEE_RATE).toFixed(2)), C.MAX_EMPLOYEE_CONTRIBUTION);
-        const er1         = Math.min(parseFloat((cpp1Pens * C.EMPLOYER_RATE).toFixed(2)), C.MAX_EMPLOYER_CONTRIBUTION);
-        const se1         = Math.min(parseFloat((cpp1Pens * C.SELF_EMPLOYED_RATE).toFixed(2)), C.MAX_SELF_EMPLOYED_CONTRIBUTION);
-        // CPP2
-        const cpp2Band    = Math.max(0, Math.min(inc, C.YAMPE) - C.YMPE);
-        const emp2        = Math.min(parseFloat((cpp2Band * C.CPP2_EMPLOYEE_RATE).toFixed(2)), C.MAX_EMPLOYEE_CPP2);
-        const er2         = Math.min(parseFloat((cpp2Band * C.CPP2_EMPLOYER_RATE).toFixed(2)), C.MAX_EMPLOYER_CPP2);
-        const se2         = Math.min(parseFloat((cpp2Band * C.CPP2_SELF_EMPLOYED_RATE).toFixed(2)), C.MAX_SELF_EMPLOYED_CPP2);
-        // Totals
-        const empTotal    = parseFloat((emp1 + emp2).toFixed(2));
-        const erTotal     = parseFloat((er1 + er2).toFixed(2));
-        const seTotal     = parseFloat((se1 + se2).toFixed(2));
-        const bothTotal   = parseFloat((empTotal + erTotal).toFixed(2));
-        const incLabel    = inc >= C.YAMPE ? `<strong>${f(C.YAMPE)}+</strong> (at full cap)` : inc >= C.YMPE ? `<strong>${f(inc)}</strong> (CPP2 applies)` : `<strong>${f(inc)}</strong>`;
-        return `<tr><td>${incLabel}</td><td>${f(empTotal)}</td><td>${f(erTotal)}</td><td>${f(bothTotal)}</td><td>${f(seTotal)}</td></tr>`;
-      }).join('');
-      scenWrap.innerHTML = `
-        <table class="scenarios-table">
-          <thead><tr>
-            <th>Annual Income</th>
-            <th>Employee Portion</th><th>Employer Portion</th>
-            <th>Combined CPP</th><th>Self-Employed Total</th>
-          </tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      `;
-    }
-    const scenOutro = document.getElementById('scenarios-outro');
-    if (scenOutro) scenOutro.textContent = `CPP1 contributions are capped once income reaches the YMPE of ${f(C.YMPE)}. For income between ${f(C.YMPE)} and the YAMPE of ${f(C.YAMPE)}, CPP2 applies at an additional ${pct(C.CPP2_EMPLOYEE_RATE)} per side. At the YAMPE ceiling, the maximum employee total is ${f(C.MAX_EMPLOYEE_TOTAL)} and the maximum self-employed total is ${f(C.MAX_SELF_EMPLOYED_TOTAL)}.`;
-
-    // ── Understanding — config-dependent paragraphs ──
-    const uSE = document.getElementById('understanding-se');
-    if (uSE) uSE.textContent = `If you are self-employed, you are responsible for paying both sides of the CPP contribution. This means your annual cost is ${pct(C.SELF_EMPLOYED_RATE)} of your pensionable earnings — effectively double the employee portion. However, the employer portion you pay is tax-deductible as a business expense on your T1 tax return, which partially offsets the additional cost.`;
-    const uPens = document.getElementById('understanding-pensionable');
-    if (uPens) uPens.textContent = `Not all of your income is subject to CPP. The basic exemption of ${f(C.BASIC_EXEMPTION)} is subtracted first, and CPP1 contributions are capped at the YMPE ceiling (${f(C.YMPE)} in ${C.TAX_YEAR}). For income between ${f(C.YMPE)} and the YAMPE of ${f(C.YAMPE)}, CPP2 applies at ${pct(C.CPP2_EMPLOYEE_RATE)} per side. Income above ${f(C.YAMPE)} is not subject to any CPP contributions.`;
-
-    // ── Info card self-employed rate ──
-    const infoSE = document.getElementById('info-se-rate');
-    if (infoSE) infoSE.textContent = `Self-employed Canadians pay both employee and employer CPP portions — totalling ${pct(C.SELF_EMPLOYED_RATE)} of pensionable earnings. This calculator shows the full self-employment cost.`;
-
-    // ── What this calculator does intro ──
-    const wtdIntro = document.getElementById('what-it-does-intro');
-    if (wtdIntro) wtdIntro.textContent = `This tool estimates Canada Pension Plan (CPP) contributions based on your gross annual employment income and whether you are a traditional employee or self-employed. It applies the ${C.TAX_YEAR} CPP contribution rules established by the Canada Revenue Agency (CRA), including the basic personal exemption of ${f(C.BASIC_EXEMPTION)}, the maximum pensionable earnings threshold of ${f(C.YMPE)}, and the applicable contribution rates.`;
-
-    // ── Index inline FAQ answers ──
-    const faqWho = document.getElementById('faq-who-contributes');
-    if (faqWho) faqWho.textContent = `Most working Canadians between the ages of 18 and 70 who earn more than ${f(C.BASIC_EXEMPTION)} in employment income are required to contribute to CPP. Exceptions include: Quebec residents (who contribute to the QPP instead), individuals receiving a CPP disability or retirement pension who have opted out, and those who have reached 70 years of age.`;
-
-    const faqYMPE = document.getElementById('faq-ympe');
-    if (faqYMPE) faqYMPE.textContent = `The Year's Maximum Pensionable Earnings (YMPE) is the ceiling above which CPP contributions are not required under base CPP. In ${C.TAX_YEAR}, the YMPE is ${f(C.YMPE)}. Income earned above this threshold is not subject to base CPP contributions. The YMPE is adjusted annually by the federal government based on the average industrial wage in Canada.`;
-
-    const faqExempt = document.getElementById('faq-basic-exemption');
-    if (faqExempt) faqExempt.textContent = `The basic exemption is ${f(C.BASIC_EXEMPTION)} per year — a fixed amount excluded from pensionable earnings before the contribution rate is applied. This exemption has remained at ${f(C.BASIC_EXEMPTION)} for many years. Effectively, it means the first ${f(C.BASIC_EXEMPTION)} of your income is not subject to CPP contributions.`;
-
-    const faqSERate = document.getElementById('faq-se-rate');
-    if (faqSERate) faqSERate.textContent = `Self-employed Canadians are considered both the employee and the employer for CPP purposes. Under the CPP legislation, both sides must contribute — so a self-employed person pays the employee rate (${pct(C.EMPLOYEE_RATE)}) plus the employer rate (${pct(C.EMPLOYER_RATE)}) for a combined rate of ${pct(C.SELF_EMPLOYED_RATE)}. However, the employer portion paid by a self-employed individual is deductible as a business expense on the T1 tax return, reducing the effective cost.`;
-
-    const faqAcc = document.getElementById('faq-accuracy');
-    if (faqAcc) faqAcc.textContent = `This calculator applies the officially published ${C.TAX_YEAR} CPP rates and thresholds (last updated ${C.LAST_UPDATED}). For most full-year employees with straightforward employment income, the result should closely match your actual annual CPP deductions. Minor differences may occur due to payroll rounding or complex income situations. For official figures, consult the CRA or your payroll provider.`;
+  // ── Trust strip & hero ──
+  const trustYear = document.getElementById('trust-tax-year');
+  const trustDate = document.getElementById('trust-last-updated');
+  if (trustYear) trustYear.textContent = `${C.TAX_YEAR} CPP rates`;
+  if (trustDate) trustDate.textContent = `Updated: ${C.LAST_UPDATED}`;
+  ['hero-year','hero-year-meta','scen-year','meth-year'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = C.TAX_YEAR;
   });
+  document.getElementById('results-year-label').textContent = C.TAX_YEAR;
 
-  // ── Toggle label update ──
-  document.getElementById('selfEmployed').addEventListener('change', function () {
-    const seRate = (CPP_CONFIG.SELF_EMPLOYED_RATE * 100).toFixed(2) + '%';
-    document.getElementById('toggleLabel').textContent = this.checked
-      ? 'Self-Employed'
-      : 'Employed (T4 employee)';
-    document.getElementById('toggleSub').textContent = this.checked
-      ? `You pay both employee and employer CPP portions (${seRate})`
-      : 'Toggle ON if you are self-employed';
-  });
+  // ── Section 3 inline values ──
+  document.getElementById('wcd-exemption').textContent = f(C.BASIC_EXEMPTION);
+  document.getElementById('wcd-ympe').textContent     = f(C.YMPE);
+  document.getElementById('wcd-yampe').textContent    = f(C.YAMPE);
 
-  // ── Utility: format as CAD currency ──
-  function fmt(n) {
-    return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  // ── Section 5 — Formula ──
+  const fbox = document.getElementById('formula-box');
+  if (fbox) fbox.innerHTML = `
+    <div class="formula-line"><span class="f-label">CPP1 Pensionable Earnings:</span>
+      <code>min(Income, YMPE) − Basic Exemption</code></div>
+    <div class="formula-line"><span class="f-label">CPP1 Employee:</span>
+      <code>CPP1 Pensionable Earnings × ${pct(C.EMPLOYEE_RATE)} (max ${f(C.MAX_EMPLOYEE_CONTRIBUTION)})</code></div>
+    <div class="formula-line"><span class="f-label">CPP1 Employer:</span>
+      <code>CPP1 Pensionable Earnings × ${pct(C.EMPLOYER_RATE)} (max ${f(C.MAX_EMPLOYER_CONTRIBUTION)})</code></div>
+    <div class="formula-line"><span class="f-label">CPP1 Self-Employed:</span>
+      <code>CPP1 Pensionable Earnings × ${pct(C.SELF_EMPLOYED_RATE)} (max ${f(C.MAX_SELF_EMPLOYED_CONTRIBUTION)})</code></div>
+    <div class="formula-line"><span class="f-label">CPP2 Band:</span>
+      <code>max(0, min(Income, YAMPE) − YMPE)</code></div>
+    <div class="formula-line"><span class="f-label">CPP2 Employee:</span>
+      <code>CPP2 Band × ${pct(C.CPP2_EMPLOYEE_RATE)} (max ${f(C.MAX_EMPLOYEE_CPP2)})</code></div>
+    <div class="formula-line"><span class="f-label">CPP2 Self-Employed:</span>
+      <code>CPP2 Band × ${pct(C.CPP2_SELF_EMPLOYED_RATE)} (max ${f(C.MAX_SELF_EMPLOYED_CPP2)})</code></div>
+    <div class="formula-line"><span class="f-label">${C.TAX_YEAR} YMPE:</span> <code>${f(C.YMPE)}</code></div>
+    <div class="formula-line"><span class="f-label">${C.TAX_YEAR} YAMPE:</span> <code>${f(C.YAMPE)}</code></div>
+    <div class="formula-line"><span class="f-label">Basic Exemption:</span> <code>${f(C.BASIC_EXEMPTION)}</code></div>
+    <div class="formula-line"><span class="f-label">Max Employee Total (CPP1+CPP2):</span> <code>${f(C.MAX_EMPLOYEE_TOTAL)}</code></div>
+    <div class="formula-line"><span class="f-label">Max Self-Employed Total:</span> <code>${f(C.MAX_SELF_EMPLOYED_TOTAL)}</code></div>
+  `;
+  const fnote = document.getElementById('formula-note');
+  if (fnote) fnote.textContent = `CPP1 is capped at the YMPE of ${f(C.YMPE)}. CPP2 applies only on the band from ${f(C.YMPE)} to ${f(C.YAMPE)} at ${pct(C.CPP2_EMPLOYEE_RATE)} per side. Income above ${f(C.YAMPE)} does not attract any CPP.`;
+
+  // ── Section 6 — Methodology inline values ──
+  document.getElementById('meth-ympe').textContent  = f(C.YMPE);
+  document.getElementById('meth-exemp').textContent = f(C.BASIC_EXEMPTION);
+  document.getElementById('meth-rate1').textContent = pct(C.EMPLOYEE_RATE);
+  document.getElementById('meth-max1').textContent  = f(C.MAX_EMPLOYEE_CONTRIBUTION);
+  document.getElementById('meth-serate').textContent = pct(C.SELF_EMPLOYED_RATE);
+  document.getElementById('meth-semax').textContent  = f(C.MAX_SELF_EMPLOYED_CONTRIBUTION);
+  document.getElementById('meth-yampe').textContent = f(C.YAMPE);
+  document.getElementById('meth-rate2').textContent = pct(C.CPP2_EMPLOYEE_RATE);
+  document.getElementById('meth-max2').textContent  = f(C.MAX_EMPLOYEE_CPP2);
+
+  const rateList = document.getElementById('methodology-rates-list');
+  if (rateList) rateList.innerHTML = `
+    <li><strong>YMPE (CPP1 ceiling):</strong> ${f(C.YMPE)}</li>
+    <li><strong>YAMPE (CPP2 ceiling):</strong> ${f(C.YAMPE)}</li>
+    <li><strong>Basic Exemption Amount:</strong> ${f(C.BASIC_EXEMPTION)}</li>
+    <li><strong>Employee / Employer CPP1 rate:</strong> ${pct(C.EMPLOYEE_RATE)} each</li>
+    <li><strong>Self-Employed CPP1 rate:</strong> ${pct(C.SELF_EMPLOYED_RATE)} combined</li>
+    <li><strong>Employee / Employer CPP2 rate:</strong> ${pct(C.CPP2_EMPLOYEE_RATE)} each</li>
+    <li><strong>Max CPP1 employee / employer:</strong> ${f(C.MAX_EMPLOYEE_CONTRIBUTION)} each</li>
+    <li><strong>Max CPP2 employee / employer:</strong> ${f(C.MAX_EMPLOYEE_CPP2)} each</li>
+    <li><strong>Max employee total (CPP1 + CPP2):</strong> ${f(C.MAX_EMPLOYEE_TOTAL)}</li>
+    <li><strong>Max self-employed total:</strong> ${f(C.MAX_SELF_EMPLOYED_TOTAL)}</li>
+  `;
+
+  // ── Section 4 — Example calculations ──
+  function calcEmployee(inc) {
+    const pe1 = Math.max(0, Math.min(inc, C.YMPE) - C.BASIC_EXEMPTION);
+    const e1  = Math.min(+(pe1 * C.EMPLOYEE_RATE).toFixed(2), C.MAX_EMPLOYEE_CONTRIBUTION);
+    const er1 = Math.min(+(pe1 * C.EMPLOYER_RATE).toFixed(2), C.MAX_EMPLOYER_CONTRIBUTION);
+    const b2  = Math.max(0, Math.min(inc, C.YAMPE) - C.YMPE);
+    const e2  = Math.min(+(b2 * C.CPP2_EMPLOYEE_RATE).toFixed(2), C.MAX_EMPLOYEE_CPP2);
+    const er2 = Math.min(+(b2 * C.CPP2_EMPLOYER_RATE).toFixed(2), C.MAX_EMPLOYER_CPP2);
+    return { pe1, e1, er1, b2, e2, er2,
+      empTotal: +(e1+e2).toFixed(2),
+      erTotal:  +(er1+er2).toFixed(2),
+      bothTotal: +(e1+e2+er1+er2).toFixed(2) };
   }
 
-  // ── Utility: format rate as percentage string ──
-  function fmtRate(r) {
-    return (r * 100).toFixed(2) + '%';
+  const EX1_INC = 65000;
+  const ex1 = calcEmployee(EX1_INC);
+  document.getElementById('example-intro-1').textContent =
+    `T4 employee, ${f(EX1_INC)} annual income, ${C.TAX_YEAR}. Income falls below the YMPE of ${f(C.YMPE)} — only CPP1 applies.`;
+  document.getElementById('example-box-1').innerHTML = `
+    <h3>Worked Example: ${f(EX1_INC)} — T4 Employee (${C.TAX_YEAR})</h3>
+    <div class="example-row"><span class="ex-label">Gross Annual Income</span><span class="ex-val">${f(EX1_INC)}</span></div>
+    <div class="example-row"><span class="ex-label">Less: Basic Exemption</span><span class="ex-val">− ${f(C.BASIC_EXEMPTION)}</span></div>
+    <div class="example-row"><span class="ex-label">CPP1 Pensionable Earnings</span><span class="ex-val">${f(ex1.pe1)}</span></div>
+    <div class="example-row"><span class="ex-label">CPP1 Rate (employee)</span><span class="ex-val">${pct(C.EMPLOYEE_RATE)}</span></div>
+    <div class="example-row"><span class="ex-label">Employee Contribution</span><span class="ex-val">${f(ex1.e1)}</span></div>
+    <div class="example-row"><span class="ex-label">Employer Match</span><span class="ex-val">${f(ex1.er1)}</span></div>
+    <div class="example-row"><span class="ex-label">CPP2 — not applicable (income below YMPE)</span><span class="ex-val">$0.00</span></div>
+    <div class="example-row total"><span class="ex-label">Total CPP to Pension Record</span><span class="ex-val">${f(ex1.bothTotal)}</span></div>
+  `;
+  document.getElementById('example-outro-1').textContent =
+    `Employee deduction: ${f(ex1.e1)}. Employer adds ${f(ex1.er1)} on top. Combined ${f(ex1.bothTotal)} is credited to this worker's CPP record for ${C.TAX_YEAR}.`;
+
+  const EX2_INC = 80000;
+  const ex2 = calcEmployee(EX2_INC);
+  document.getElementById('example-intro-2').textContent =
+    `Same employment type, ${f(EX2_INC)} income — above the YMPE of ${f(C.YMPE)}. CPP1 is maxed first; CPP2 applies on the band from ${f(C.YMPE)} to ${f(EX2_INC)}.`;
+  document.getElementById('example-box-2').innerHTML = `
+    <h3>Worked Example: ${f(EX2_INC)} — T4 Employee (${C.TAX_YEAR})</h3>
+    <div class="example-row"><span class="ex-label">Gross Annual Income</span><span class="ex-val">${f(EX2_INC)}</span></div>
+    <div class="example-row"><span class="ex-label">CPP1 Pensionable Earnings (capped at YMPE)</span><span class="ex-val">${f(ex2.pe1)}</span></div>
+    <div class="example-row"><span class="ex-label">CPP1 Employee (${pct(C.EMPLOYEE_RATE)})</span><span class="ex-val">${f(ex2.e1)}</span></div>
+    <div class="example-row"><span class="ex-label">CPP1 Employer (matched)</span><span class="ex-val">${f(ex2.er1)}</span></div>
+    <div class="example-row"><span class="ex-label">CPP2 Band (${f(C.YMPE)} to ${f(EX2_INC)})</span><span class="ex-val">${f(ex2.b2)}</span></div>
+    <div class="example-row"><span class="ex-label">CPP2 Employee (${pct(C.CPP2_EMPLOYEE_RATE)})</span><span class="ex-val">${f(ex2.e2)}</span></div>
+    <div class="example-row"><span class="ex-label">CPP2 Employer (matched)</span><span class="ex-val">${f(ex2.er2)}</span></div>
+    <div class="example-row total"><span class="ex-label">Employee Total (CPP1 + CPP2)</span><span class="ex-val">${f(ex2.empTotal)}</span></div>
+    <div class="example-row total"><span class="ex-label">Combined Total to Pension Record</span><span class="ex-val">${f(ex2.bothTotal)}</span></div>
+  `;
+  document.getElementById('example-outro-2').textContent =
+    `CPP1 is at its maximum of ${f(ex2.e1)}. CPP2 adds ${f(ex2.e2)} — a total employee deduction of ${f(ex2.empTotal)}. With employer matching on both tiers, ${f(ex2.bothTotal)} is credited to the pension record.`;
+
+  // ── Section 7 — Scenario Cards ──
+  function calcSE(inc) {
+    const pe1 = Math.max(0, Math.min(inc, C.YMPE) - C.BASIC_EXEMPTION);
+    const se1 = Math.min(+(pe1 * C.SELF_EMPLOYED_RATE).toFixed(2), C.MAX_SELF_EMPLOYED_CONTRIBUTION);
+    const b2  = Math.max(0, Math.min(inc, C.YAMPE) - C.YMPE);
+    const se2 = Math.min(+(b2 * C.CPP2_SELF_EMPLOYED_RATE).toFixed(2), C.MAX_SELF_EMPLOYED_CPP2);
+    return { pe1, se1, b2, se2, total: +(se1+se2).toFixed(2) };
   }
 
-  // ── CPP Calculation Logic — reads exclusively from CPP_CONFIG ──
-  function calculateCPP() {
-    const income        = parseFloat(document.getElementById('income').value);
-    const isSelfEmployed = document.getElementById('selfEmployed').checked;
+  const SCEN_MID  = 58000;
+  const SCEN_HIGH = C.YAMPE + 5000;
+  const SCEN_SE   = 72000;
+  const sMid   = calcEmployee(SCEN_MID);
+  const sHigh  = calcEmployee(SCEN_HIGH);
+  const sSE    = calcSE(SCEN_SE);
 
-    if (isNaN(income) || income < 0) {
-      alert('Please enter a valid annual income amount.');
-      return;
-    }
+  const scenCards = document.getElementById('scenario-cards');
+  if (scenCards) scenCards.innerHTML = `
+    <div class="scenario-card">
+      <div class="scenario-head employee">Scenario A — Mid-Income Employee</div>
+      <div class="scenario-body">
+        <div class="scenario-row"><span class="sc-label">Annual Income</span><span class="sc-val">${f(SCEN_MID)}</span></div>
+        <div class="scenario-row"><span class="sc-label">CPP1 Pensionable Earnings</span><span class="sc-val">${f(sMid.pe1)}</span></div>
+        <div class="scenario-row"><span class="sc-label">CPP2 Band</span><span class="sc-val">$0.00 (below YMPE)</span></div>
+        <div class="scenario-row"><span class="sc-label">Employee Contribution</span><span class="sc-val">${f(sMid.empTotal)}</span></div>
+        <div class="scenario-row"><span class="sc-label">Employer Contribution</span><span class="sc-val">${f(sMid.erTotal)}</span></div>
+        <div class="scenario-row"><span class="sc-label">Combined CPP to Account</span><span class="sc-val">${f(sMid.bothTotal)}</span></div>
+      </div>
+      <div class="scenario-note">Income falls below the YMPE of ${f(C.YMPE)}. Only CPP1 applies. Employee contributes ${pct(C.EMPLOYEE_RATE)} on pensionable earnings; employer matches dollar-for-dollar.</div>
+    </div>
+    <div class="scenario-card">
+      <div class="scenario-head capped">Scenario B — High Income (Both Tiers Maxed)</div>
+      <div class="scenario-body">
+        <div class="scenario-row"><span class="sc-label">Annual Income</span><span class="sc-val">${f(SCEN_HIGH)}</span></div>
+        <div class="scenario-row"><span class="sc-label">CPP1 Pensionable Earnings</span><span class="sc-val">${f(sHigh.pe1)} (capped)</span></div>
+        <div class="scenario-row"><span class="sc-label">CPP2 Band</span><span class="sc-val">${f(sHigh.b2)} (maxed)</span></div>
+        <div class="scenario-row"><span class="sc-label">Employee Contribution</span><span class="sc-val">${f(sHigh.empTotal)} (max)</span></div>
+        <div class="scenario-row"><span class="sc-label">Employer Contribution</span><span class="sc-val">${f(sHigh.erTotal)} (matched)</span></div>
+        <div class="scenario-row"><span class="sc-label">Combined CPP to Account</span><span class="sc-val">${f(sHigh.bothTotal)}</span></div>
+      </div>
+      <div class="scenario-note">Income exceeds the YAMPE of ${f(C.YAMPE)}. Both CPP1 and CPP2 are at their annual maximum. Earnings above ${f(C.YAMPE)} attract no further CPP. Total employee deduction is capped at ${f(C.MAX_EMPLOYEE_TOTAL)}.</div>
+    </div>
+    <div class="scenario-card">
+      <div class="scenario-head self-emp">Scenario C — Self-Employed</div>
+      <div class="scenario-body">
+        <div class="scenario-row"><span class="sc-label">Net Self-Employment Income</span><span class="sc-val">${f(SCEN_SE)}</span></div>
+        <div class="scenario-row"><span class="sc-label">CPP1 Pensionable Earnings</span><span class="sc-val">${f(sSE.pe1)}</span></div>
+        <div class="scenario-row"><span class="sc-label">CPP2 Band</span><span class="sc-val">$0.00 (below YMPE)</span></div>
+        <div class="scenario-row"><span class="sc-label">CPP1 Self-Employed (both sides)</span><span class="sc-val">${f(sSE.se1)}</span></div>
+        <div class="scenario-row"><span class="sc-label">CPP2 Self-Employed</span><span class="sc-val">$0.00</span></div>
+        <div class="scenario-row"><span class="sc-label">Total CPP Cost</span><span class="sc-val">${f(sSE.total)}</span></div>
+      </div>
+      <div class="scenario-note">No employer match — both sides of CPP are the individual's cost. Rate is ${pct(C.SELF_EMPLOYED_RATE)} of pensionable earnings. The employer-equivalent half (${pct(C.EMPLOYER_RATE)}) is deductible on the T1 return at Line 22200.</div>
+    </div>
+  `;
 
-    // ── Step 1: Base CPP (CPP1) ──
-    const cpp1Capped          = Math.min(income, CPP_CONFIG.YMPE);
-    const cpp1Pensionable     = Math.max(0, cpp1Capped - CPP_CONFIG.BASIC_EXEMPTION);
-    const cpp1Employee        = Math.min(parseFloat((cpp1Pensionable * CPP_CONFIG.EMPLOYEE_RATE).toFixed(2)), CPP_CONFIG.MAX_EMPLOYEE_CONTRIBUTION);
-    const cpp1Employer        = Math.min(parseFloat((cpp1Pensionable * CPP_CONFIG.EMPLOYER_RATE).toFixed(2)), CPP_CONFIG.MAX_EMPLOYER_CONTRIBUTION);
-    const cpp1SelfEmployed    = Math.min(parseFloat((cpp1Pensionable * CPP_CONFIG.SELF_EMPLOYED_RATE).toFixed(2)), CPP_CONFIG.MAX_SELF_EMPLOYED_CONTRIBUTION);
+  // Reference table
+  const TABLE_INCOMES = [20000, 35000, 50000, 65000, C.YMPE, 80000, C.YAMPE];
+  const tWrap = document.getElementById('scenarios-table-wrap');
+  if (tWrap) {
+    const rows = TABLE_INCOMES.map(inc => {
+      const d = calcEmployee(inc);
+      const s = calcSE(inc);
+      const lbl = inc >= C.YAMPE ? `<strong>${f(C.YAMPE)}+</strong> (both tiers maxed)`
+                : inc >= C.YMPE  ? `<strong>${f(inc)}</strong> <em>(CPP2 applies)</em>`
+                :                  `<strong>${f(inc)}</strong>`;
+      return `<tr><td>${lbl}</td><td>${f(d.empTotal)}</td><td>${f(d.erTotal)}</td><td>${f(d.bothTotal)}</td><td>${f(s.total)}</td></tr>`;
+    }).join('');
+    tWrap.innerHTML = `
+      <table class="scenarios-table">
+        <thead><tr>
+          <th>Annual Income</th><th>Employee</th><th>Employer</th><th>Combined</th><th>Self-Employed</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+  const scOutro = document.getElementById('scenarios-outro');
+  if (scOutro) scOutro.textContent =
+    `CPP1 reaches its maximum at the YMPE of ${f(C.YMPE)}. CPP2 is maxed at the YAMPE of ${f(C.YAMPE)}. The maximum employee total is ${f(C.MAX_EMPLOYEE_TOTAL)}; the maximum self-employed total is ${f(C.MAX_SELF_EMPLOYED_TOTAL)}.`;
 
-    // ── Step 2: CPP2 ──
-    const cpp2Band            = Math.max(0, Math.min(income, CPP_CONFIG.YAMPE) - CPP_CONFIG.YMPE);
-    const cpp2Employee        = Math.min(parseFloat((cpp2Band * CPP_CONFIG.CPP2_EMPLOYEE_RATE).toFixed(2)), CPP_CONFIG.MAX_EMPLOYEE_CPP2);
-    const cpp2Employer        = Math.min(parseFloat((cpp2Band * CPP_CONFIG.CPP2_EMPLOYER_RATE).toFixed(2)), CPP_CONFIG.MAX_EMPLOYER_CPP2);
-    const cpp2SelfEmployed    = Math.min(parseFloat((cpp2Band * CPP_CONFIG.CPP2_SELF_EMPLOYED_RATE).toFixed(2)), CPP_CONFIG.MAX_SELF_EMPLOYED_CPP2);
+  // ── FAQ inline values ──
+  document.getElementById('faq-ympe').textContent   = f(C.YMPE);
+  document.getElementById('faq-yampe').textContent  = f(C.YAMPE);
+  document.getElementById('faq-year-1').textContent = C.TAX_YEAR;
+  document.getElementById('faq-exemp').textContent  = f(C.BASIC_EXEMPTION);
+  document.getElementById('faq-accuracy').textContent =
+    `For a single T4 employer over a full calendar year, this estimate closely matches the annual deduction on your T4. Differences arise from per-period payroll rounding. Current rates are ${C.TAX_YEAR} (last updated ${C.LAST_UPDATED}).`;
+});
 
-    // ── Step 3: Totals ──
-    const employeeContrib     = parseFloat((cpp1Employee + cpp2Employee).toFixed(2));
-    const employerContrib     = parseFloat((cpp1Employer + cpp2Employer).toFixed(2));
-    const selfEmployedTotal   = parseFloat((cpp1SelfEmployed + cpp2SelfEmployed).toFixed(2));
-    const totalCPP            = parseFloat((employeeContrib + employerContrib).toFixed(2));
-    const hasCpp2             = cpp2Band > 0;
+// ── Toggle ──
+document.getElementById('selfEmployed').addEventListener('change', function () {
+  const serate = (CPP_CONFIG.SELF_EMPLOYED_RATE * 100).toFixed(2) + '%';
+  document.getElementById('toggleLabel').textContent = this.checked ? 'Self-Employed' : 'Employed (T4 employee)';
+  document.getElementById('toggleSub').textContent   = this.checked
+    ? `You pay both sides of CPP — combined rate ${serate}`
+    : 'Toggle ON if you are self-employed';
+  document.getElementById('incomeLabel').textContent = this.checked ? 'Annual Self-Employment Income' : 'Annual Employment Income';
+});
 
-    // ── Step 4: Populate results grid ──
-    const grid = document.getElementById('resultsGrid');
-    if (isSelfEmployed) {
-      grid.innerHTML = `
-        <div class="result-item highlight">
-          <div class="r-label">Your Total CPP Cost</div>
-          <div class="r-value">${fmt(selfEmployedTotal)}</div>
-        </div>
-        <div class="result-item">
-          <div class="r-label">CPP1 (Base) — Your Portion</div>
-          <div class="r-value">${fmt(cpp1SelfEmployed)}</div>
-        </div>
-        ${hasCpp2 ? `<div class="result-item">
-          <div class="r-label">CPP2 (Second Additional)</div>
-          <div class="r-value">${fmt(cpp2SelfEmployed)}</div>
-        </div>` : ''}
-        <div class="result-item">
-          <div class="r-label">Total CPP to Your Account</div>
-          <div class="r-value">${fmt(selfEmployedTotal)}</div>
-        </div>
-      `;
-    } else {
-      grid.innerHTML = `
-        <div class="result-item highlight">
-          <div class="r-label">Your CPP Deduction</div>
-          <div class="r-value">${fmt(employeeContrib)}</div>
-        </div>
-        <div class="result-item">
-          <div class="r-label">CPP1 (Base) Employee Portion</div>
-          <div class="r-value">${fmt(cpp1Employee)}</div>
-        </div>
-        ${hasCpp2 ? `<div class="result-item">
-          <div class="r-label">CPP2 Employee Portion</div>
-          <div class="r-value">${fmt(cpp2Employee)}</div>
-        </div>` : ''}
-        <div class="result-item">
-          <div class="r-label">Employer Contribution (matched)</div>
-          <div class="r-value">${fmt(employerContrib)}</div>
-        </div>
-        <div class="result-item">
-          <div class="r-label">Total CPP to Your Account</div>
-          <div class="r-value">${fmt(totalCPP)}</div>
-        </div>
-      `;
-    }
+// ── Calculator Engine ──
+function fmt(n) { return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+function fmtPct(r) { return (r * 100).toFixed(2) + '%'; }
 
-    // ── Step 5: Populate breakdown — all values from CPP_CONFIG ──
-    const breakdown = document.getElementById('resultsBreakdown');
-    breakdown.innerHTML = `
-      <h4>Contribution Breakdown — ${CPP_CONFIG.TAX_YEAR} CPP Rates</h4>
-      <div class="breakdown-row">
-        <span class="br-label">Gross Annual Income</span>
-        <span class="br-val">${fmt(income)}</span>
-      </div>
-      <div class="breakdown-row">
-        <span class="br-label">${CPP_CONFIG.TAX_YEAR} YMPE (CPP1 ceiling)</span>
-        <span class="br-val">${fmt(CPP_CONFIG.YMPE)}</span>
-      </div>
-      <div class="breakdown-row">
-        <span class="br-label">Less: Basic Exemption</span>
-        <span class="br-val">− ${fmt(CPP_CONFIG.BASIC_EXEMPTION)}</span>
-      </div>
-      <div class="breakdown-row">
-        <span class="br-label">CPP1 Pensionable Earnings</span>
-        <span class="br-val">${fmt(cpp1Pensionable)}</span>
-      </div>
-      <div class="breakdown-row">
-        <span class="br-label">CPP1 Rate Applied</span>
-        <span class="br-val">${isSelfEmployed ? fmtRate(CPP_CONFIG.SELF_EMPLOYED_RATE) + ' (self-employed)' : fmtRate(CPP_CONFIG.EMPLOYEE_RATE) + ' (employee)'}</span>
-      </div>
-      <div class="breakdown-row">
-        <span class="br-label">CPP1 ${isSelfEmployed ? 'Self-Employed' : 'Employee'} Contribution</span>
-        <span class="br-val">${fmt(isSelfEmployed ? cpp1SelfEmployed : cpp1Employee)}</span>
-      </div>
-      ${hasCpp2 ? `
-      <div class="breakdown-row">
-        <span class="br-label">CPP2 Band (${fmt(CPP_CONFIG.YMPE)} – ${fmt(CPP_CONFIG.YAMPE)})</span>
-        <span class="br-val">${fmt(cpp2Band)}</span>
-      </div>
-      <div class="breakdown-row">
-        <span class="br-label">CPP2 Rate Applied</span>
-        <span class="br-val">${isSelfEmployed ? fmtRate(CPP_CONFIG.CPP2_SELF_EMPLOYED_RATE) + ' (self-employed)' : fmtRate(CPP_CONFIG.CPP2_EMPLOYEE_RATE) + ' (employee)'}</span>
-      </div>
-      <div class="breakdown-row">
-        <span class="br-label">CPP2 ${isSelfEmployed ? 'Self-Employed' : 'Employee'} Contribution</span>
-        <span class="br-val">${fmt(isSelfEmployed ? cpp2SelfEmployed : cpp2Employee)}</span>
-      </div>` : ''}
-      <div class="breakdown-row">
-        <span class="br-label">Employment Type</span>
-        <span class="br-val">${isSelfEmployed ? 'Self-Employed' : 'T4 Employee'}</span>
-      </div>
-      <div class="breakdown-row" style="font-weight:600">
-        <span class="br-label">Total ${isSelfEmployed ? 'Self-Employed' : 'Employee'} Contribution</span>
-        <span class="br-val">${fmt(isSelfEmployed ? selfEmployedTotal : employeeContrib)}</span>
-      </div>
+function calculateCPP() {
+  const income = parseFloat(document.getElementById('income').value);
+  const isSE   = document.getElementById('selfEmployed').checked;
+  if (isNaN(income) || income < 0) {
+    alert('Please enter a valid annual income amount.');
+    return;
+  }
+
+  const C = CPP_CONFIG;
+
+  const cpp1Pens  = Math.max(0, Math.min(income, C.YMPE) - C.BASIC_EXEMPTION);
+  const cpp1Emp   = Math.min(+(cpp1Pens * C.EMPLOYEE_RATE).toFixed(2),  C.MAX_EMPLOYEE_CONTRIBUTION);
+  const cpp1Er    = Math.min(+(cpp1Pens * C.EMPLOYER_RATE).toFixed(2),  C.MAX_EMPLOYER_CONTRIBUTION);
+  const cpp1SE    = Math.min(+(cpp1Pens * C.SELF_EMPLOYED_RATE).toFixed(2), C.MAX_SELF_EMPLOYED_CONTRIBUTION);
+
+  const cpp2Band  = Math.max(0, Math.min(income, C.YAMPE) - C.YMPE);
+  const cpp2Emp   = Math.min(+(cpp2Band * C.CPP2_EMPLOYEE_RATE).toFixed(2),    C.MAX_EMPLOYEE_CPP2);
+  const cpp2Er    = Math.min(+(cpp2Band * C.CPP2_EMPLOYER_RATE).toFixed(2),    C.MAX_EMPLOYER_CPP2);
+  const cpp2SE    = Math.min(+(cpp2Band * C.CPP2_SELF_EMPLOYED_RATE).toFixed(2), C.MAX_SELF_EMPLOYED_CPP2);
+
+  const empTotal  = +(cpp1Emp + cpp2Emp).toFixed(2);
+  const erTotal   = +(cpp1Er  + cpp2Er).toFixed(2);
+  const seTotal   = +(cpp1SE  + cpp2SE).toFixed(2);
+  const combined  = +(empTotal + erTotal).toFixed(2);
+  const hasCPP2   = cpp2Band > 0;
+
+  // Results grid
+  const grid = document.getElementById('resultsGrid');
+  if (isSE) {
+    grid.innerHTML = `
+      <div class="result-item highlight"><div class="r-label">Your Total CPP Cost</div><div class="r-value">${fmt(seTotal)}</div></div>
+      <div class="result-item"><div class="r-label">CPP1 (Base)</div><div class="r-value">${fmt(cpp1SE)}</div></div>
+      ${hasCPP2 ? `<div class="result-item"><div class="r-label">CPP2 (Enhancement)</div><div class="r-value">${fmt(cpp2SE)}</div></div>` : ''}
     `;
+  } else {
+    grid.innerHTML = `
+      <div class="result-item highlight"><div class="r-label">Your CPP Deduction</div><div class="r-value">${fmt(empTotal)}</div></div>
+      <div class="result-item"><div class="r-label">Employer Contribution</div><div class="r-value">${fmt(erTotal)}</div></div>
+      <div class="result-item"><div class="r-label">Total to Pension Record</div><div class="r-value">${fmt(combined)}</div></div>
+      ${hasCPP2 ? `<div class="result-item"><div class="r-label">CPP2 Portion</div><div class="r-value">${fmt(cpp2Emp)}</div></div>` : ''}
+    `;
+  }
 
-    // ── Step 6: Update results note with active tax year ──
-    const note = document.getElementById('resultsNote');
-    if (note) {
-      note.innerHTML = `⚠️ <strong>Estimate Only:</strong> This calculator uses ${CPP_CONFIG.TAX_YEAR} CPP rates and thresholds (last updated ${CPP_CONFIG.LAST_UPDATED}). Results are for informational purposes and do not constitute official CRA calculations or financial advice. Actual deductions may vary based on your specific employment situation, province, and other income sources.`;
+  // Contextual result message
+  const ctxEl = document.getElementById('resultContext');
+  ctxEl.style.display = 'flex';
+  if (isSE) {
+    const deductible = +(cpp1Er + cpp2Er).toFixed(2);
+    ctxEl.className = 'result-context self-emp';
+    ctxEl.innerHTML = `<span class="rc-icon">📋</span><span>As a self-employed individual, both the employee and employer portions of CPP are your direct cost — ${fmt(seTotal)} in total. The employer-equivalent half (${fmt(deductible)}) is deductible on your T1 return at Line 22200, partially offsetting the combined rate.</span>`;
+  } else if (income > C.YAMPE) {
+    ctxEl.className = 'result-context at-cap';
+    ctxEl.innerHTML = `<span class="rc-icon">🔒</span><span>Both CPP tiers have reached their annual maximum for ${C.TAX_YEAR}. The employee contribution is capped at ${fmt(C.MAX_EMPLOYEE_TOTAL)}. Earnings above ${fmt(C.YAMPE)} attract no further CPP — deductions will stop once the ceiling is reached in payroll.</span>`;
+  } else if (income >= C.YMPE) {
+    ctxEl.className = 'result-context cpp2';
+    ctxEl.innerHTML = `<span class="rc-icon">📈</span><span>This income falls in the CPP2 band. CPP1 is at its annual maximum of ${fmt(C.MAX_EMPLOYEE_CONTRIBUTION)} — contributions on the first ${fmt(C.YMPE)} are complete. CPP2 applies to the ${fmt(cpp2Band)} above the YMPE at ${fmtPct(C.CPP2_EMPLOYEE_RATE)}, and will continue increasing until income reaches ${fmt(C.YAMPE)}.</span>`;
+  } else if (income > C.BASIC_EXEMPTION) {
+    const remaining = +(C.MAX_EMPLOYEE_CONTRIBUTION - empTotal).toFixed(2);
+    ctxEl.className = 'result-context under-cap';
+    ctxEl.innerHTML = `<span class="rc-icon">✓</span><span>Contributions are below the CPP1 annual maximum of ${fmt(C.MAX_EMPLOYEE_CONTRIBUTION)}. At this income, ${fmt(remaining)} of contribution room remains. Deductions will continue at ${fmtPct(C.EMPLOYEE_RATE)} per paycheque — CPP2 does not apply until income exceeds ${fmt(C.YMPE)}.</span>`;
+  } else {
+    ctxEl.className = 'result-context under-cap';
+    ctxEl.innerHTML = `<span class="rc-icon">ℹ️</span><span>Income is below the basic exemption of ${fmt(C.BASIC_EXEMPTION)}. The CPP contribution rate applies only to earnings above this threshold — no contributions are owed at this income level.</span>`;
+  }
+
+  // Breakdown
+  document.getElementById('resultsBreakdown').innerHTML = `
+    <h4>Calculation Breakdown — ${C.TAX_YEAR}</h4>
+    <div class="breakdown-row"><span class="br-label">Gross Annual Income</span><span class="br-val">${fmt(income)}</span></div>
+    <div class="breakdown-row"><span class="br-label">YMPE</span><span class="br-val">${fmt(C.YMPE)}</span></div>
+    <div class="breakdown-row"><span class="br-label">Less: Basic Exemption</span><span class="br-val">− ${fmt(C.BASIC_EXEMPTION)}</span></div>
+    <div class="breakdown-row"><span class="br-label">CPP1 Pensionable Earnings</span><span class="br-val">${fmt(cpp1Pens)}</span></div>
+    <div class="breakdown-row"><span class="br-label">CPP1 Rate</span><span class="br-val">${isSE ? fmtPct(C.SELF_EMPLOYED_RATE) + ' (self-employed)' : fmtPct(C.EMPLOYEE_RATE) + ' (employee)'}</span></div>
+    <div class="breakdown-row"><span class="br-label">CPP1 ${isSE ? 'Self-Employed' : 'Employee'} Contribution</span><span class="br-val">${fmt(isSE ? cpp1SE : cpp1Emp)}</span></div>
+    ${hasCPP2 ? `
+    <div class="breakdown-row"><span class="br-label">CPP2 Band</span><span class="br-val">${fmt(cpp2Band)}</span></div>
+    <div class="breakdown-row"><span class="br-label">CPP2 Rate</span><span class="br-val">${isSE ? fmtPct(C.CPP2_SELF_EMPLOYED_RATE) + ' (self-employed)' : fmtPct(C.CPP2_EMPLOYEE_RATE) + ' (employee)'}</span></div>
+    <div class="breakdown-row"><span class="br-label">CPP2 ${isSE ? 'Self-Employed' : 'Employee'} Contribution</span><span class="br-val">${fmt(isSE ? cpp2SE : cpp2Emp)}</span></div>
+    ` : ''}
+    <div class="breakdown-row" style="font-weight:600;"><span class="br-label">Total ${isSE ? 'Self-Employed' : 'Employee'} Contribution</span><span class="br-val">${fmt(isSE ? seTotal : empTotal)}</span></div>
+    ${!isSE ? `<div class="breakdown-row"><span class="br-label">Employer Contribution</span><span class="br-val">${fmt(erTotal)}</span></div>` : ''}
+  `;
+
+  const note = document.getElementById('resultsNote');
+  note.innerHTML = `⚠️ <strong>Estimate Only:</strong> Uses ${C.TAX_YEAR} CPP rates (updated ${C.LAST_UPDATED}). Not official CRA output.`;
+
+  document.getElementById('resultsSection').classList.add('visible');
+  document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  // Next-step from network
+  const nb = document.getElementById('nextStepBlock');
+  const nl = document.getElementById('nextStepLinks');
+  if (nb && nl && window.NetworkJS) {
+    const tools = NetworkJS.getRelatedTools();
+    if (tools.length) {
+      nl.innerHTML = tools.map(t => `<a href="${t.url}">${t.name} →</a>`).join('');
+      nb.style.display = 'block';
     }
-
-    // ── Show results ──
-    document.getElementById('resultsSection').classList.add('visible');
-    document.getElementById('pdfMessage').classList.remove('visible');
-    document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
+}
 
-  // ── PDF Validation Feature ──
-  function handlePdfClick() {
-    document.dispatchEvent(new CustomEvent('pdf_click', {
-      detail: { timestamp: Date.now(), page: 'index', taxYear: CPP_CONFIG.TAX_YEAR }
-    }));
-    const msg = document.getElementById('pdfMessage');
-    msg.classList.add('visible');
-    msg.textContent = 'PDF export coming soon';
-  }
+function toggleFaq(btn) {
+  btn.parentElement.classList.toggle('open');
+}
 
-  // ── FAQ Toggle ──
-  function toggleFaq(btn) {
-    btn.parentElement.classList.toggle('open');
-  }
-
-  // ── Enter key to calculate ──
-  document.getElementById('income').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') calculateCPP();
-  });
+document.getElementById('income').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') calculateCPP();
+});
 </script>
 </body>
 </html>

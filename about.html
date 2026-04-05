@@ -3,35 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About | CPP Calc</title>
-  <meta name="description" content="Learn about CPPCalc.ca — a free, independent Canada Pension Plan contribution estimator built for Canadian employees and self-employed workers." />
+  <title>About CPPCalc.ca | cppcalc.ca</title>
+  <meta name="description" content="Why CPP contribution calculations are less straightforward than they appear — and what variables this tool accounts for." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23c8102e'/><text x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='18' font-weight='bold' fill='white'>C</text></svg>" />
   <link rel="canonical" href="https://cppcalc.ca/about.html" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "CPP Calc",
-    "url": "https://cppcalc.ca",
-    "description": "Free Canada Pension Plan (CPP) contribution estimator for employees and self-employed Canadians. Calculate your CPP deductions based on current CRA rates.",
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "Any",
-    "browserRequirements": "Requires JavaScript",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
-    "creator": { "@type": "Organization", "name": "CPP Calc", "url": "https://cppcalc.ca" }
-  }
-  </script>
   <style>
-    :root {
-      --red:#c8102e; --red-dark:#9e0b23; --red-light:#f5e8eb;
-      --navy:#1a2744; --navy-mid:#253660; --slate:#3d4f6e;
-      --mist:#eef1f6; --mist-dark:#dde2ec; --white:#ffffff; --off-white:#f8f9fb;
-      --text:#1c2333; --text-mid:#3d4a60; --text-light:#6b7897;
-      --border:#d0d8e8;
-      --radius:10px; --radius-lg:16px;
-      --shadow-sm:0 1px 4px rgba(26,39,68,0.08); --shadow-md:0 4px 16px rgba(26,39,68,0.12);
-      --font-head:'Georgia','Times New Roman',serif;
-      --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
-    }
+    :root{--red:#c8102e;--red-dark:#9e0b23;--navy:#1a2744;--navy-mid:#253660;--mist:#eef1f6;--mist-dark:#dde2ec;--white:#ffffff;--off-white:#f8f9fb;--text:#1c2333;--text-mid:#3d4a60;--text-light:#6b7897;--border:#d0d8e8;--radius:10px;--radius-lg:16px;--shadow-sm:0 1px 4px rgba(26,39,68,0.08);--shadow-md:0 4px 16px rgba(26,39,68,0.12);--font-head:'Georgia','Times New Roman',serif;--font-body:'Segoe UI',system-ui,-apple-system,sans-serif;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:var(--font-body);font-size:16px;line-height:1.65;color:var(--text);background:var(--off-white);}
     .site-header{background:var(--navy);border-bottom:3px solid var(--red);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-md);}
@@ -45,16 +22,18 @@
     .site-nav a:hover{background:rgba(255,255,255,0.1);color:#fff;}
     .page-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);padding:48px 24px;text-align:center;}
     .page-hero h1{font-family:var(--font-head);color:var(--white);font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:10px;}
-    .page-hero p{color:rgba(255,255,255,0.7);max-width:560px;margin:0 auto;}
-    .page-content{max-width:800px;margin:40px auto;padding:0 24px 60px;}
-    .content-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px 40px;box-shadow:var(--shadow-sm);margin-bottom:28px;}
-    .content-card h2{font-family:var(--font-head);font-size:1.3rem;color:var(--navy);margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--mist-dark);}
-    .content-card h3{font-family:var(--font-head);font-size:1.05rem;color:var(--navy);margin:20px 0 10px;}
-    .content-card p{color:var(--text-mid);margin-bottom:14px;font-size:0.96rem;}
-    .content-card ul{color:var(--text-mid);margin-bottom:14px;padding-left:22px;}
-    .content-card li{margin-bottom:8px;font-size:0.96rem;}
-    .highlight-box{background:var(--red-light);border:1px solid rgba(200,16,46,0.2);border-radius:var(--radius);padding:18px 22px;margin:20px 0;}
-    .highlight-box p{color:var(--red-dark);margin:0;font-size:0.92rem;}
+    .page-hero p{color:rgba(255,255,255,0.7);max-width:580px;margin:0 auto;}
+    .page-content{max-width:760px;margin:40px auto;padding:0 24px 60px;}
+    .page-content h2{font-family:var(--font-head);font-size:1.3rem;color:var(--navy);margin:32px 0 12px;}
+    .page-content h2:first-child{margin-top:0;}
+    .page-content p{color:var(--text-mid);margin-bottom:14px;font-size:0.97rem;}
+    .page-content ul{color:var(--text-mid);margin-bottom:14px;padding-left:24px;}
+    .page-content li{margin-bottom:7px;font-size:0.97rem;}
+    .divider{height:1px;background:var(--mist-dark);margin:32px 0;}
+    .network-link{background:var(--mist);border:1px solid var(--mist-dark);border-radius:var(--radius);padding:16px 20px;margin-top:32px;}
+    .network-link p{font-size:0.9rem;color:var(--text-mid);margin:0;}
+    .network-link a{color:var(--red);font-weight:600;text-decoration:none;}
+    .network-link a:hover{text-decoration:underline;}
     .site-footer{background:var(--navy);border-top:3px solid var(--red);color:rgba(255,255,255,0.7);margin-top:60px;}
     #network-footer{max-width:1100px;margin:0 auto;padding:0 24px;}
     .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding:48px 0 36px;}
@@ -66,18 +45,19 @@
     .footer-hub-desc{display:block;font-size:0.8rem;color:rgba(255,255,255,0.45);margin-top:4px;}
     .footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding:18px 0;font-size:0.8rem;color:rgba(255,255,255,0.4);text-align:center;}
     .footer-bottom p{margin:3px 0;}
-    .related-card{display:flex;flex-direction:column;gap:6px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;transition:border-color 0.2s,box-shadow 0.2s;box-shadow:var(--shadow-sm);}
-    .related-card:hover{border-color:var(--red);box-shadow:var(--shadow-md);}
-    .related-card-name{font-weight:700;color:var(--navy);font-size:0.95rem;}
+    .related-card{display:flex;flex-direction:column;gap:6px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;transition:border-color 0.2s;box-shadow:var(--shadow-sm);}
+    .related-card:hover{border-color:var(--red);}
+    .related-card-name{font-weight:700;color:var(--navy);}
     .related-card-desc{font-size:0.85rem;color:var(--text-mid);}
     .related-card-link{font-size:0.82rem;font-weight:600;color:var(--red);}
-    #network-related-calculators{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:16px;}
-    @media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}.content-card{padding:22px 20px;}.site-nav{display:none;}}
+    #network-related-calculators{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:8px;}
+    @media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}.site-nav{display:none;}}
     @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7744853829365165" crossorigin="anonymous"></script>
 </head>
 <body>
+
 <header class="site-header">
   <div class="header-inner">
     <a href="index.html" class="site-logo">
@@ -92,78 +72,55 @@
   </div>
 </header>
 
-<section class="page-hero">
-  <h1>About</h1>
-  <p>A free, independent Canada Pension Plan contribution estimator built for Canadian workers.</p>
-</section>
+<div class="page-hero">
+  <h1>About CPPCalc.ca</h1>
+  <p>What this tool calculates, why CPP arithmetic is less transparent than it appears, and what variables it accounts for.</p>
+</div>
 
 <div class="page-content">
 
-  <div class="content-card">
-    <h2>What Is CPPCalc.ca?</h2>
-    <p>CPPCalc.ca is a free, browser-based Canada Pension Plan (CPP) contribution estimator designed for Canadian employees and self-employed individuals. It allows anyone to quickly estimate their annual CPP contributions based on their gross employment income and employment type, using the current year's officially published CPP rates and thresholds.</p>
-    <p>This tool was built because understanding your CPP deductions shouldn't require a payroll degree. The calculation is straightforward — but the terminology, the exemptions, and the differences between employment types often cause confusion. CPPCalc.ca aims to eliminate that confusion with a simple, transparent, and well-explained tool.</p>
-    <div class="highlight-box">
-      <p>⚠️ CPPCalc.ca is an independent estimation tool. It is not affiliated with the Government of Canada, the Canada Revenue Agency (CRA), or Service Canada. All results are estimates only and should not be used as official tax filing amounts.</p>
-    </div>
+  <h2>Why CPP Calculations Are Not Intuitive</h2>
+  <p>The Canada Pension Plan contribution formula appears straightforward — multiply income by a rate, subtract an exemption — but several structural features make the result non-obvious in practice.</p>
+  <p>The basic exemption is not prorated on a per-period basis in this calculator, but it is in payroll systems. The CPP rate does not apply to all income — only to the band between the exemption floor and the YMPE ceiling. And since 2024, a second tier (CPP2) has added a separate band above the YMPE with its own ceiling and a different rate. For employees with income that spans multiple bands, the calculation produces two separate results that must be combined.</p>
+  <p>Self-employed individuals face a further complication: they pay both the employee and employer halves, but the employer-equivalent portion is deductible as a tax expense. The gross CPP cost and the net after-tax cost are different numbers, and neither one is what appears on a pay stub because self-employed individuals have no pay stub — the obligation is settled at T1 filing.</p>
+
+  <div class="divider"></div>
+
+  <h2>What Creates the Most Confusion</h2>
+  <p>Several variables cause the biggest disconnect between expectation and the calculated result:</p>
+  <ul>
+    <li><strong>The basic exemption is fixed, not proportional.</strong> The first $3,500 of earnings is always exempt, regardless of income level. At lower incomes, this exemption is a meaningful reduction. At higher incomes, it represents a small fraction of total earnings and has a negligible effect on the result.</li>
+    <li><strong>The employer contribution is invisible to the employee.</strong> For T4 workers, the employer's matching contribution never appears on a paycheque. It is a real cost — paid separately by the employer to the CRA — but it is not deducted from salary. This means the total CPP credit building toward retirement is substantially larger than what an employee sees deducted.</li>
+    <li><strong>CPP2 is a recent addition many workers have not encountered before.</strong> Workers whose income falls between the YMPE and YAMPE are now contributing to two separate CPP tiers simultaneously. The rates differ. The benefit entitlements differ. This calculator separates them clearly in the breakdown.</li>
+    <li><strong>Per-period payroll rounding produces results that differ from annual calculations.</strong> A payroll system running 26 bi-weekly periods will round each period's CPP independently. An annual calculator rounds once. The T4 reflects the former; this tool calculates the latter.</li>
+    <li><strong>Multiple T4 employers create over-contribution scenarios.</strong> Because each employer tracks only its own deductions, total annual CPP can exceed the maximum when income is split. The excess is reconciled at T1 filing, but workers are often surprised to see higher-than-expected deductions mid-year.</li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <h2>What This Tool Clarifies</h2>
+  <p>This calculator takes annual gross income and employment type as inputs and applies the full CPP calculation: basic exemption reduction, CPP1 rate on the first band, CPP2 rate on the second band where applicable, annual caps on each tier, and separate results for employee, employer, and self-employed contributions.</p>
+  <p>Results include a contextual note based on where the entered income falls relative to the annual thresholds — a statement specific to that income level rather than a static message. The breakdown shows each step of the calculation, including pensionable earnings, rates applied, and whether CPP2 triggered.</p>
+  <p>CPP rates are sourced from publicly available Government of Canada publications and are updated in a central configuration file when the CRA publishes new annual parameters. The date of the most recent rate update is shown in the calculator.</p>
+  <p>All calculations are deterministic and run entirely in the browser. No input data is transmitted, logged, or stored.</p>
+
+  <div class="divider"></div>
+
+  <h2>What This Tool Does Not Do</h2>
+  <ul>
+    <li>It does not model Quebec Pension Plan (QPP) contributions — those fall under separate provincial legislation with different rates.</li>
+    <li>It does not account for CPT30 elections or model the contribution behaviour of workers in the 65–70 age window who have stopped contributing.</li>
+    <li>It does not calculate the resulting CPP retirement benefit or project pension amounts. Contribution amounts and benefit entitlements are related but require a separate calculation methodology.</li>
+    <li>It does not provide financial, tax, or legal advice. It produces estimates from publicly available rate data and should be used accordingly.</li>
+  </ul>
+
+  <div class="network-link">
+    <p>If you're working through a full payroll picture, related calculators covering Ontario take-home pay and EI premiums are at <a href="https://calc-hq.ca" target="_blank" rel="noopener noreferrer">calc-hq.ca</a>. For rate corrections or partnership enquiries, contact <a href="mailto:partnerships@calc-hq.ca">partnerships@calc-hq.ca</a>.</p>
   </div>
 
-  <div class="content-card">
-    <h2>Who Built This?</h2>
-    <p>CPPCalc.ca is part of a broader Canadian financial utility network built by independent web publishers dedicated to creating clear, trustworthy, and free financial reference tools for Canadians. The network includes calculators for related topics such as Employment Insurance (EI) premiums and Ontario take-home pay — all built on the same principles of transparency, accuracy, and simplicity.</p>
-    <p>The network also maintains a central directory and authority resource for related Canadian financial tools, while this site remains focused specifically on CPP contribution estimates.</p>
-    <p>All tools in the network are built with static HTML, CSS, and JavaScript — no data is transmitted to any server. Your income information never leaves your browser.</p>
-  </div>
-
-  <div class="content-card">
-    <h2>Our Approach to Accuracy</h2>
-    <p>We take accuracy seriously. All CPP rates, thresholds, and exemptions used in this calculator are sourced from publicly available Government of Canada publications and CRA guidance. We review and update rates annually when the federal government announces changes to the CPP parameters.</p>
-    <h3 id="about-params-heading">2026 CPP Parameters Used</h3>
-    <ul id="about-params-list">
-      <li><strong>Year's Maximum Pensionable Earnings (YMPE):</strong> $74,600</li>
-      <li><strong>Basic Exemption Amount:</strong> $3,500</li>
-      <li><strong>Employee Contribution Rate (CPP1):</strong> 5.95%</li>
-      <li><strong>Employer Contribution Rate (CPP1):</strong> 5.95%</li>
-      <li><strong>Maximum Annual CPP1 Employee/Employer Contribution:</strong> $4,230.45</li>
-      <li><strong>Maximum Annual CPP1 Self-Employed Contribution:</strong> $8,460.90</li>
-      <li><strong>Year's Additional Maximum Pensionable Earnings (YAMPE):</strong> $85,000</li>
-      <li><strong>CPP2 Employee/Employer Rate:</strong> 4.00%</li>
-      <li><strong>Maximum Annual CPP2 Employee/Employer Contribution:</strong> $416.00</li>
-      <li><strong>Maximum Annual Employee Total (CPP1 + CPP2):</strong> $4,646.45</li>
-      <li><strong>Maximum Annual Self-Employed Total (CPP1 + CPP2):</strong> $9,292.90</li>
-    </ul>
-    <p>While we strive to maintain accuracy, this is not an official CRA tool and results should be treated as estimates. Payroll calculations for actual pay periods may differ slightly due to per-period rounding or specific employment circumstances not modelled by this calculator.</p>
-  </div>
-
-  <div class="content-card">
-    <h2>Privacy and Data</h2>
-    <p>We are committed to your privacy. CPPCalc.ca does not collect, store, transmit, or process any personal or financial information you enter into the calculator. All calculations are performed entirely within your browser using JavaScript — no data is ever sent to any server.</p>
-    <p>The site uses standard analytics to understand aggregate usage patterns (such as page visits and general traffic trends), but no personally identifiable information is ever collected. For full details, please read our <a href="privacy-policy.html">Privacy Policy</a>.</p>
-  </div>
-
-  <div class="content-card">
-    <h2>Limitations and Disclaimer</h2>
-    <p>CPPCalc.ca is designed as an educational and planning tool. There are several situations where this calculator's estimates may not apply accurately:</p>
-    <ul>
-      <li>Quebec residents contribute to the QPP, not CPP — this calculator does not apply.</li>
-      <li id="about-cpp2-limit">CPP2 (the enhanced second tier, applying to income between $74,600 and $85,000) is fully calculated and included in results for qualifying incomes. Includes both base CPP (CPP1) and enhanced CPP (CPP2) contributions.</li>
-      <li>Partial-year employment, multiple employers, or unusual income structures may affect actual contributions.</li>
-      <li>CPP contributions are not deducted from all income types — only from eligible employment income.</li>
-      <li>Age-related rules (contributions stop at 70, and those 65–70 may elect to stop) are not modelled.</li>
-    </ul>
-    <p>For questions about your specific payroll deductions, consult your employer's payroll team or the Canada Revenue Agency. For questions about your CPP retirement benefit projection, contact Service Canada.</p>
-  </div>
-
-  <div class="content-card">
-    <h2>Related Tools</h2>
-    <p>CPP contributions are just one part of your Canadian payroll deductions. Explore related calculators in our network:</p>
+  <div style="margin-top:32px;">
+    <h3 style="font-family:var(--font-head);font-size:1.1rem;color:var(--navy);margin-bottom:14px;">Related Calculators</h3>
     <div id="network-related-calculators"></div>
-  </div>
-
-  <div class="content-card">
-    <h2>Contact Us</h2>
-    <p>For questions, feedback, or partnership inquiries, please reach out to us at <a href="mailto:partnerships@calc-hq.ca">partnerships@calc-hq.ca</a>. We welcome corrections, rate update notices, and suggestions for improving the tool.</p>
-    <p>You can also visit our <a href="contact.html">Contact page</a> for more details.</p>
   </div>
 
 </div>
@@ -171,55 +128,8 @@
 <footer class="site-footer">
   <div id="network-footer"></div>
 </footer>
+
+<script src="js/config.js"></script>
 <script src="js/network.js"></script>
-<script>
-  const CPP_CONFIG = {
-    TAX_YEAR:    2026,
-    LAST_UPDATED: "March 22, 2026",
-    YMPE:        74600,
-    YAMPE:       85000,
-    BASIC_EXEMPTION: 3500,
-    EMPLOYEE_RATE:   0.0595,
-    EMPLOYER_RATE:   0.0595,
-    CPP2_EMPLOYEE_RATE: 0.04,
-    CPP2_EMPLOYER_RATE: 0.04,
-    get SELF_EMPLOYED_RATE() { return this.EMPLOYEE_RATE + this.EMPLOYER_RATE; },
-    MAX_EMPLOYEE_CONTRIBUTION:      4230.45,
-    MAX_EMPLOYER_CONTRIBUTION:      4230.45,
-    MAX_SELF_EMPLOYED_CONTRIBUTION: 8460.90,
-    MAX_EMPLOYEE_CPP2:              416.00,
-    MAX_EMPLOYER_CPP2:              416.00,
-    MAX_SELF_EMPLOYED_CPP2:         832.00,
-    MAX_EMPLOYEE_TOTAL:             4646.45,
-    MAX_EMPLOYER_TOTAL:             4646.45,
-    MAX_SELF_EMPLOYED_TOTAL:        9292.90,
-  };
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const C = CPP_CONFIG;
-    const f = n => '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    const pct = r => (r * 100).toFixed(2) + '%';
-
-    const h = document.getElementById('about-params-heading');
-    if (h) h.textContent = C.TAX_YEAR + ' CPP Parameters Used';
-
-    const list = document.getElementById('about-params-list');
-    if (list) list.innerHTML = `
-      <li><strong>Year's Maximum Pensionable Earnings (YMPE):</strong> ${f(C.YMPE)}</li>
-      <li><strong>Basic Exemption Amount:</strong> ${f(C.BASIC_EXEMPTION)}</li>
-      <li><strong>Employee Contribution Rate (CPP1):</strong> ${pct(C.EMPLOYEE_RATE)}</li>
-      <li><strong>Employer Contribution Rate (CPP1):</strong> ${pct(C.EMPLOYER_RATE)}</li>
-      <li><strong>Maximum Annual CPP1 Employee/Employer Contribution:</strong> ${f(C.MAX_EMPLOYEE_CONTRIBUTION)}</li>
-      <li><strong>Maximum Annual CPP1 Self-Employed Contribution:</strong> ${f(C.MAX_SELF_EMPLOYED_CONTRIBUTION)}</li>
-      <li><strong>Year's Additional Maximum Pensionable Earnings (YAMPE):</strong> ${f(C.YAMPE)}</li>
-      <li><strong>CPP2 Employee/Employer Rate:</strong> ${pct(C.CPP2_EMPLOYEE_RATE)}</li>
-      <li><strong>Maximum Annual CPP2 Employee/Employer Contribution:</strong> ${f(C.MAX_EMPLOYEE_CPP2)}</li>
-      <li><strong>Maximum Annual Employee Total (CPP1 + CPP2):</strong> ${f(C.MAX_EMPLOYEE_TOTAL)}</li>
-      <li><strong>Maximum Annual Self-Employed Total (CPP1 + CPP2):</strong> ${f(C.MAX_SELF_EMPLOYED_TOTAL)}</li>
-    `;
-
-    const cpp2 = document.getElementById('about-cpp2-limit');
-    if (cpp2) cpp2.innerHTML = `CPP2 (the enhanced second tier, applying to income between ${f(C.YMPE)} and ${f(C.YAMPE)}) is fully calculated and included in results for qualifying incomes.`;
-  });
-</script></body>
+</body>
 </html>

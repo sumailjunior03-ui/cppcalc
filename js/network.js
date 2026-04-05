@@ -11,7 +11,7 @@
     hub: {
       name: "Calc-HQ Canada",
       url: "https://calc-hq.ca",
-      description: "Canadian financial calculator network hub",
+      description: "Canadian payroll, tax, and contribution calculators",
     },
     tools: [
       {
@@ -27,7 +27,7 @@
         name: "EI Calculator Canada",
         url: "https://eicalc.ca",
         description:
-          "Calculate your Employment Insurance (EI) premiums and benefit entitlements.",
+          "Calculate your Employment Insurance (EI) premiums based on insurable earnings and the current MIE ceiling.",
         tags: ["ei", "employment insurance", "benefits"],
       },
     ],
@@ -80,7 +80,7 @@
       <div class="footer-grid">
         <div class="footer-col">
           <h4>CPP Calc</h4>
-          <p>A free Canada Pension Plan contribution estimator for employees and self-employed Canadians.</p>
+          <p>CPP contribution estimates for employees and the self-employed — based on current CRA rates.</p>
           <p class="footer-email">Questions? <a href="mailto:partnerships@calc-hq.ca">partnerships@calc-hq.ca</a></p>
         </div>
         <div class="footer-col">
@@ -98,7 +98,7 @@
           ${toolLinks}
         </div>
         <div class="footer-col">
-          <h4>Network Hub</h4>
+          <h4>More Tools</h4>
           <a href="${NETWORK.hub.url}" target="_blank" rel="noopener noreferrer">${NETWORK.hub.name}</a>
           <span class="footer-hub-desc">${NETWORK.hub.description}</span>
         </div>

@@ -11,7 +11,7 @@
 
   const NETWORK = {
     hub: {
-      name: "Calc-HQ Canada",
+      name: "Calc-HQ.ca",
       url: "https://calc-hq.ca",
       description: "Canadian payroll, tax, and contribution calculators",
     },
